@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  bdd:
+    build:
+      context: .
+    image: efrei-internship-bdd
+    container_name: efrei-internship-bdd
+    ports:
+      - "5432:5432"
