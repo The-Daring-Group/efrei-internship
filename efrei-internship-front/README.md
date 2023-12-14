@@ -26,7 +26,7 @@ Build the application for production:
 
 ```bash
 # npm
-npm run buildtetst
+npm run build
 ```
 
 Locally preview production build:
