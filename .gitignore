@@ -1,4 +1,4 @@
 node_modules
-efrei-internship-back/routes/.data_db
+*.data_db
 
 **/.idea
