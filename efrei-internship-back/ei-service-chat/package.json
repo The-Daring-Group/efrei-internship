@@ -1,0 +1,12 @@
+{
+  "name": "ei-service-chat",
+  "version": "1.0.0",
+  "description": "Chat service between a student and an academic tutor",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
