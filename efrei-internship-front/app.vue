@@ -1,8 +1,8 @@
 <template>
   <div>
-    <NuxtWelcome />
+    <Internships />
   </div>
 </template>
 <script setup lang="ts">
-import Internships from "~/pages/internship/Internships.vue";
+import Internships from "~/internship/Internships.vue";
 </script>
