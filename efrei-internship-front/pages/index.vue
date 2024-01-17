@@ -4,6 +4,7 @@
             <nav>
                 <ul>
                     <li><NuxtLink to="about">About</NuxtLink></li>
+                    <li><NuxtLink to="internship/Internships">internships</NuxtLink></li>
                 </ul>
             </nav>
         </header>
