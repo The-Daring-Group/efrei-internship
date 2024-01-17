@@ -23,18 +23,30 @@
     </div>
     <div>
       <label for="startDate">Start Date</label>
-      <input id="startDate" v-model="internshipData.startDate" placeholder="Start Date"/>
+      <input ref="startDate" v-model="internshipData.startDate" placeholder="Select Start Date" />
     </div>
     <div>
       <label for="endDate">End Date</label>
-      <input id="endDate" v-model="internshipData.endDate" placeholder="End Date"/>
+      <input ref="endDate" v-model="internshipData.endDate" placeholder="Select End Date" />
     </div>
     <button @click="submitData">Submit</button>
   </div>
 </template>
 
 <script>
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+
 export default {
+  mounted() {
+    flatpickr(this.$refs.startDate, {
+      dateFormat: 'd-m-Y',
+    });
+
+    flatpickr(this.$refs.endDate, {
+      dateFormat: 'd-m-Y',
+    });
+  },
   data() {
     return {
       internshipData: {
@@ -109,5 +121,6 @@ export default {
 
   button:hover {
     background-color: #45a049;
+    transform: scale(1.2);
   }
 </style>
