@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Internships />
+    <NuxtPage />
   </div>
 </template>
 <script setup lang="ts">
