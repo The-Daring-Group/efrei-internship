@@ -26,6 +26,15 @@ Launch the database with the following command
 # docker-compose
 docker-compose up -d
 ```
+And stop it with
+```bash
+docker-compose down
+```
+
+If there is changes in init.sql, you can use the following command
+```bash
+docker-compose up -d --build
+```
 
 ## Front-end
 
