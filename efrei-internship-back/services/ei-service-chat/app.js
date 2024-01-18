@@ -15,7 +15,7 @@ app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }
 
 app.use('/api/', apiRouter)
 
-var port = process.env.PORT || 3001
+var port = process.env.PORT || 3002
 
 app.listen(port, () => {
   console.log('Server listening on port ' + port)

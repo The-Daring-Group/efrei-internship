@@ -5,6 +5,14 @@ This is the main readme file for the Advanced Programming Project. There are 3 d
 - efrei-internship-bdd
 - efrei-internship-front
 
+## Launching all the project
+
+To launch all the project, you can use the following command
+```bash
+./launch.sh
+```
+*\*Note: You need to have docker open*
+
 ## Back-end
 
 1. Install dependencies
