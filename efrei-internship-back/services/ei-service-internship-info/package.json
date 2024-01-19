@@ -2,9 +2,9 @@
   "name": "ei-service-internship-info",
   "version": "1.0.0",
   "description": "",
-  "main": "bin/www.js",
+  "main": "bin/www",
   "scripts": {
-    "server": "npm i && node ./bin/www.js",
+    "server": "npm i && node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
