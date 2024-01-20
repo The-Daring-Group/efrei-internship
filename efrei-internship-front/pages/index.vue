@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div class="m-5">
         <header>
             <nav>
-                <ul>
-                    <li><NuxtLink to="about">About</NuxtLink></li>
-                    <li><NuxtLink to="internship/Internships">internships</NuxtLink></li>
+                <ul class="text-blue-600">
+                    <li class="hover:text-blue-800"><NuxtLink to="about">About</NuxtLink></li>
+                    <li class="hover:text-blue-800"><NuxtLink to="internship/Internships">internships</NuxtLink></li>
                 </ul>
             </nav>
         </header>
-        <h1>Home Page - Child component below</h1>
+        <div class="text-2xl text-center">Home Page - Child component below</div>
         <ButtonCounter/>
     </div>
 </template>

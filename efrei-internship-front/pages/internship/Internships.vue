@@ -1,8 +1,8 @@
 <!-- pages/internship.vue -->
 <template>
-  <div>
-    <h1>Welcome to Internship Page</h1>
-    <nuxt-link to="InternshipForm">Register an internship</nuxt-link>
+  <div class="m-5">
+    <div class="text-2xl text-center">Welcome to Internship Page</div>
+    <nuxt-link class="text-blue-600 hover:text-blue-800" to="InternshipForm">Register an internship</nuxt-link>
   </div>
 </template>
 
