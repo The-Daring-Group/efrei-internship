@@ -14,12 +14,15 @@
     "nuxt": "^3.9.3",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
+    "vite-plugin-vuetify": "^2.0.1",
     "vue": "^3.4.14",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.5.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/vue-fontawesome": "^3.0.5"
+    "@fortawesome/vue-fontawesome": "^3.0.5",
+    "@mdi/font": "^7.4.47"
   }
 }
