@@ -1,24 +1,28 @@
 <template>
     <HeaderTA/>
-    <div class="m-5">
-        <div class="text-2xl text-center">Internship list page</div>
-        <div class="flex flex-col items-center">
+    <div class="tw-m-5">
+        <div class="tw-text-2xl tw-text-center tw-mb-5">Internship list page</div>
+        <div>
             <v-table :data="internships">
-            <thead slot="head" class="bg-slate-500">
-                <th>Student</th>
-                <th>Company</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </thead>
-            <tbody slot="body" slot-scope="{displayData}">
-                <tr v-for="internship in internships">
-                    <td>{{ internship.student }}</td>
-                    <td>{{ internship.companyName }}</td>
-                    <td>{{ internship.startDate }}</td>
-                    <td>{{ internship.endDate }}</td>
-                </tr>
-            </tbody>
-        </v-table>
+                <thead slot="head">
+                    <th>Student</th>
+                    <th>Company</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Options</th>
+                </thead>
+                <tbody slot="body" slot-scope="{displayData}">
+                    <tr v-for="internship in internships">
+                        <td class="text-center">{{ internship.student }}</td>
+                        <td class="text-center">{{ internship.companyName }}</td>
+                        <td class="text-center">{{ internship.startDate }}</td>
+                        <td class="text-center">{{ internship.endDate }}</td>
+                        <td class="tw-flex tw-items-center tw-justify-center">
+                            <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2">Rate Presentation<font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" /></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
         </div>
     </div>
 </template>

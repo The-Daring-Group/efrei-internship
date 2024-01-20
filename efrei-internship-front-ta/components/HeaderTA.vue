@@ -1,10 +1,10 @@
 <template>
-    <div class="p-2 border-b-2 border-black">
-        <div class="text-xl mb-1">Efrei Internship | Academic Tutor Section</div>
+    <div class="tw-p-2 tw-border-b-2 tw-border-black">
+        <div class="tw-text-xl tw-mb-1">Efrei Internship | Academic Tutor Section</div>
         <nav>
-            <ul class="text-white bg-teal-500 p-1 rounded-md flex flex-row justify-between">
-                <li class="hover:bg-teal-800 bg-teal-600 w-fit p-2 rounded-md"><NuxtLink to="internships/list">Internships</NuxtLink></li>
-                <li class="hover:bg-teal-200 bg-teal-100 text-teal-700 w-fit p-2 rounded-md">Disconnect <font-awesome-icon class="ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
+            <ul class="tw-text-white tw-bg-teal-500 tw-p-1 tw-rounded-md tw-flex tw-flex-row tw-justify-between">
+                <li class="hover:tw-bg-teal-800 tw-bg-teal-600 tw-w-fit tw-p-2 tw-rounded-md"><NuxtLink to="internships/list">Internships</NuxtLink></li>
+                <li class="hover:tw-bg-teal-200 tw-bg-teal-100 tw-text-teal-700 tw-w-fit tw-p-2 tw-rounded-md">Disconnect <font-awesome-icon class="tw-ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
             </ul>
         </nav>
     </div>
