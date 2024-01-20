@@ -18,7 +18,10 @@
                         <td class="text-center">{{ internship.startDate }}</td>
                         <td class="text-center">{{ internship.endDate }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
-                            <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2">Rate Presentation<font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" /></div>
+                            <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2">
+                                <NuxtLink :to="{ path: '/internships/rate-presentation/' + internship.id }">Rate Presentation</NuxtLink>
+                                <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -32,12 +35,14 @@
     // FAKE DATA. TO DO = Implement back-end service
     const internships = ref([
     {
+        id: 1,
         student: "Antoine Lachaud",
         companyName: "Microsoft",
         startDate: formatDate("2024-03-11"),
         endDate: formatDate("2024-09-19"),
     },
     {
+        id: 2,
         student: "Romain Marques",
         companyName: "Stellantis",
         startDate: formatDate("2024-04-01"),
