@@ -6,9 +6,10 @@ export default {
     "./app.vue",
     "./error.vue"
   ],
+  prefix: "tw-",
   theme: {
     extend: {},
   },
-  plugins: [],
+  
 }
 
