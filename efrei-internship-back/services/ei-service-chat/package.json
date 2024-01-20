@@ -4,8 +4,8 @@
   "description": "Chat service between a student and an academic tutor",
   "main": "app.js",
   "scripts": {
-    "start": "npm i && node ./bin/www.js",
-    "dev": "nodemon bin/www.js",
+    "start": "npm i && node ./bin/www",
+    "dev": "nodemon bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
