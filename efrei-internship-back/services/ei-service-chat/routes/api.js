@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const data_db = require('./.data_db');
+const data_db = require('../.data_db');
 
 const { Sequelize } = require("sequelize");
 
@@ -16,17 +16,6 @@ const sequelize = new Sequelize(
   }
 );
 
-/*
-create table if not exists chat (
-    id serial primary key,
-    content text not null,
-    date date not null,
-    id_sender int not null,
-    id_receiver int not null,
-    constraint fk_sender foreign key (id_sender) references person(id_efrei),
-    constraint fk_receiver foreign key (id_receiver) references person(id_efrei)
-);
-*/
 const Chat = sequelize.define("chat", {
   id: {
     type: Sequelize.INTEGER,
