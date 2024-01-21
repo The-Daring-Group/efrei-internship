@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Internship Form</h1>
+  <div class="bg-[#f4f4f4]">
+    <div class="text-2xl text-center pt-2">Internship Form</div>
     <div>
       <label for="title">Title</label>
       <input id="title" v-model="internshipData.title" placeholder="Title"/>
@@ -29,7 +29,7 @@
       <label for="endDate">End Date</label>
       <input ref="endDate" v-model="internshipData.endDate" placeholder="Select End Date" />
     </div>
-    <button @click="submitData">Submit</button>
+    <button class="bg-blue-500 text-white rounded-sm hover:cursor-pointer hover:bg-green-500 p-2 float-right mr-4" @click="submitData">Submit</button>
   </div>
 </template>
 
@@ -69,13 +69,6 @@ export default {
 </script>
 
 <style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-
   div {
     margin-bottom: 15px;
   }
@@ -104,23 +97,7 @@ export default {
     margin-right: 2%;
   }
 
-  button {
-    background-color: #228aff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-    margin-right: 2%;
-  }
-
-  .button-container {
-    text-align: right; /* Align the button to the right */
-  }
-
   button:hover {
-    background-color: #45a049;
     transform: scale(1.2);
   }
 </style>
