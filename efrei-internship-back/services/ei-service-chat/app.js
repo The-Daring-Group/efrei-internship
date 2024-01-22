@@ -1,7 +1,9 @@
+// app.js
 const express = require('express')
 const session = require('express-session')
 const logger = require('morgan')
 const cors = require('cors')
+//require('dotenv').config(); // for .env file, need to install dotenv package
 
 const apiRouter = require('./routes/api.js')
 
@@ -17,8 +19,8 @@ app.use('/api/', apiRouter)
 
 var port = process.env.PORT || 3002
 
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log('Server listening on port ' + port)
-})
+})*/
 
 module.exports = app

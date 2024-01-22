@@ -1,8 +1,11 @@
+DROP DATABASE IF EXISTS db_efrei_internship;
 CREATE DATABASE db_efrei_internship;
 
 CREATE USER ei_user WITH PASSWORD 'ei_password';
 GRANT ALL PRIVILEGES ON DATABASE db_efrei_internship TO ei_user;
 GRANT ALL PRIVILEGES ON SCHEMA public TO ei_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ei_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ei_user;
 
 create table if not exists person (
     id_efrei int primary key,
@@ -64,7 +67,7 @@ create table if not exists document (
     constraint fk_company_tutor foreign key (id_company_tutor) references person(id_efrei)
 );
 
-create table if not exists chat (
+/*create table if not exists chat (
     id serial primary key,
     content text not null,
     date date not null,
@@ -72,4 +75,4 @@ create table if not exists chat (
     id_receiver int not null,
     constraint fk_sender foreign key (id_sender) references person(id_efrei),
     constraint fk_receiver foreign key (id_receiver) references person(id_efrei)
-);
+);*/

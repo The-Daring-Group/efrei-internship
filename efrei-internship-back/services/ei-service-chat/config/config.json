@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "ei_user",
+    "password": "ei_password",
+    "database": "db_efrei_internship",
+    "host": "localhost",
+    "port": "5432",
+    "dialect": "postgres"
+  }
+}

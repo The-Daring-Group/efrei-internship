@@ -1,65 +1,14 @@
+// api.js
 const express = require("express");
 const router = express.Router();
 
-const data_db = require('./.data_db');
+const db = require("../models");
 
-const { Sequelize } = require("sequelize");
-
-const sequelize = new Sequelize(
-  "db_efrei_internship",
-  data_db.Username,
-  data_db.Password,
-  {
-    dialect: "postgres",
-    host: data_db.Host,
-    port: data_db.Port,
-  }
-);
-
-/*
-create table if not exists chat (
-    id serial primary key,
-    content text not null,
-    date date not null,
-    id_sender int not null,
-    id_receiver int not null,
-    constraint fk_sender foreign key (id_sender) references person(id_efrei),
-    constraint fk_receiver foreign key (id_receiver) references person(id_efrei)
-);
-*/
-const Chat = sequelize.define("chat", {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  content: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
-  date: {
-    type: Sequelize.DATE,
-    allowNull: false,
-  },
-  id_sender: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  id_receiver: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
+db.sequelize.sync().then(() => {
+  console.log("Database connected");
 });
 
-try {
-  sequelize.authenticate().then(() => {
-    console.log("Connection to PostgreSQL database has been established successfully.");
-  });
-} catch (error) {
-  console.error("Unable to connect", error);
-}
-
-sequelize.sync();
+const { Chat } = require("../models");
 
 router.use((req, res, next) => {
   next();
@@ -69,15 +18,59 @@ router.get("/", (req, res) => {
   res.send("Welcome to the chat API");
 });
 
-router.get("/messages", (req, res) => {
-  /*sequelize
-    .query("SELECT * FROM chat", { type: Sequelize.QueryTypes.SELECT })
+router.get("/messages", async (req, res) => {
+  Chat.findAll()
+    .then((chat) => {
+      res.status(200).json(chat);
+    })
+    .catch((error) => {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+// get all messages between two users
+router.get("/messages/:userID1/:userID2", async (req, res) => {
+  const { userID1, userID2 } = req.params;
+  Chat.findAll({
+    where: {
+      [Op.or]: [
+        {
+          id_sender: userID1,
+          id_receiver: userID2,
+        },
+        {
+          id_sender: userID2,
+          id_receiver: userID1,
+        },
+      ],
+    },
+  })
     .then((messages) => {
-      res.json(messages);
-    });*/
-  Chat.findAll().then((messages) => {
-    res.json(messages);
-  });
+      res.status(200).json(messages); // think to sort by date and be sure which user is the sender
+    })
+    .catch((error) => {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+router.post("/messages", async (req, res) => {
+  const { content, date, id_sender, id_receiver } = req.body;
+
+  Chat.create({
+    content,
+    date,
+    id_sender,
+    id_receiver,
+  })
+    .then((chat) => {
+      res.status(201).json(chat);
+    })
+    .catch((error) => {
+      console.error("Error creating chat:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
 });
 
 module.exports = router;
