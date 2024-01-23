@@ -73,7 +73,7 @@ create table if not exists document (
 create table if not exists chat (
     id serial primary key,
     content text not null,
-    date date not null,
+    date timestamp not null default current_timestamp,
     id_sender int not null,
     id_receiver int not null,
     constraint fk_sender foreign key (id_sender) references person(id),
