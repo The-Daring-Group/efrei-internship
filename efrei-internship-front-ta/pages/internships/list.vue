@@ -3,7 +3,8 @@
     <div class="tw-m-5">
         <div class="tw-text-2xl tw-text-center tw-mb-5">Internship list page</div>
         <div>
-            <v-table :data="internships">
+            <div v-if="loading">Loading...</div>
+            <v-table :data="internships" v-if="!loading">
                 <thead slot="head">
                     <th>Student</th>
                     <th>Company</th>
@@ -35,9 +36,35 @@
 </template>
 
 <script setup>
+    const loading = ref(false);
+    const internships = ref([]);
+    const academicTutorID = 2;
+
+    onMounted(() => {
+        loadInternships();
+    });
+
+    const loadInternships = () => {
+        loading.value = true;
+
+        $fetch(`/api/hello`, {
+            method: 'GET',
+            baseURL: 'http://localhost:3002',
+        }).then(function (internships) {
+            console.log(internships);
+            appendInternships(internships.data);
+            loading.value = false;
+        })
+    };
+
+    const appendInternships = (newInternships) => {
+        newInternships.forEach((internship) => {
+            internships.value.push(internship);
+        })
+    };
 
     // FAKE DATA. TO DO = Implement back-end service
-    const internships = ref([
+    const internshipsFake = ref([
     {
         id: 1,
         student: "Antoine Lachaud",
