@@ -5,18 +5,22 @@
   "scripts": {
     "start": "npm i && npm run dev",
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --port 8000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "autoprefixer": "^10.4.17",
     "nuxt": "^3.8.2",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "axios": "^1.6.5",
     "flatpickr": "^4.6.13",
     "nuxt-app": "file:"
   }
