@@ -59,8 +59,8 @@ router.get("/messages/:userId1/:userId2", (req, res) => { // Get messages betwee
 
 router.post("/messages", (req, res) => { // Post a message
   sequelize
-    .query("INSERT INTO chat (user_id_1, user_id_2, message) VALUES (?, ?, ?)", {
-      replacements: [req.body.user_id_1, req.body.user_id_2, req.body.message],
+    .query("INSERT INTO chat (content, id_sender, id_receiver) VALUES (?, ?, ?)", {
+      replacements: [req.body.content, req.body.id_sender, req.body.id_receiver],
       type: Sequelize.QueryTypes.INSERT,
     })
     .then((messages) => {
