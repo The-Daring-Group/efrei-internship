@@ -84,3 +84,8 @@ create table if not exists chat (
 
 insert into student (email, id_efrei, password) values ('test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
 insert into academic_tutor (email, password) values ('academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into company_tutor (email, password) values ('company.tutor@company.com', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into internship (title, start_date, end_date, description, company_name, id_student, id_academic_tutor, id_company_tutor) values (
+    "DevOps Engineer", '2024-03-11', '2024-09-26', 
+    'As a DevOps Engineer at Microsoft, my tasks will be to migrate the previous CI/CD system into a new one with powerful innovative technologies',
+    'Microsoft Corporation',1, 2, 3);
