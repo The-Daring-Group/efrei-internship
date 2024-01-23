@@ -4,7 +4,8 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "server": "npm i && node bin/www",
+    "start": "npm i && node ./bin/www",
+    "dev": "nodemon bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
