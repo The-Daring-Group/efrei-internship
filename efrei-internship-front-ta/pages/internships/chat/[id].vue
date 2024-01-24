@@ -48,6 +48,7 @@ export default {
       sender: 2,
       messages: [],
       newMessage: "",
+      intervalId: null,
     };
   },
   mounted() {
@@ -56,6 +57,20 @@ export default {
     this.getMessages().then(() => {
       this.markUnreadMessagesAsRead();
     });
+
+    // Rechargez les messages toutes les 5 secondes
+    this.intervalId = setInterval(() => {
+      this.getMessages().then(() => {
+        this.markUnreadMessagesAsRead();
+      });
+    }, 7000);
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId);
+  },
+  beforeRouteLeave(to, from, next) {
+    clearInterval(this.intervalId);
+    next();
   },
   methods: {
     async getReceiverName() {
