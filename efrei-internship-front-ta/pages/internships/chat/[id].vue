@@ -1,22 +1,138 @@
 <template>
-    <div>
-      <h1>Chat with User {{ userId }}</h1>
-      <!-- Ajoutez ici votre interface de chat, messages, etc. -->
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        userId: null
-      };
+  <div>
+    <header>
+      <nav>
+        <ul>
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+        </ul>
+      </nav>
+    </header>
+    <h1 class="text-3xl font-bold text-center mb-4">Chat with <b>{{ receiverName }}</b></h1>
+
+    <!-- Liste des messages -->
+    <ul class="messages-list">
+      <li
+        v-for="message in messages"
+        :key="message.id"
+        :class="{
+          sent: message.id_sender === sender,
+          received: message.id_receiver === sender,
+        }"
+      >
+        {{ message.content }}
+      </li>
+    </ul>
+
+    <!-- Interface d'envoi de messages -->
+    <form @submit.prevent="sendMessage" class="message-input">
+      <input
+        type="text"
+        v-model="newMessage"
+        placeholder="Type your message here..."
+      />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+// obtain the id from the URL
+export default {
+  data() {
+    return {
+      receiver: this.$route.params.id,
+      receiverName: "",
+      sender: 2,
+      messages: [],
+      newMessage: "",
+    };
+  },
+  mounted() {
+    //console.log(this.$route.params.id)
+    this.getReceiverName();
+    this.getMessages();
+  },
+  methods: {
+    async getReceiverName() {
+      const response = await axios.get(
+        "http://localhost:3002/api/user/" + this.receiver
+      );
+      this.receiverName = response.data[0].firstname + " " + response.data[0].lastname;
     },
-    async fetch() {
-      const userId = parseInt(this.$route.params.id, 10);
-      console.log(userId);
-      this.userId = userId;
-    }
-  };
-  </script>
-  
+    async getMessages() {
+      const response = await axios.get(
+        "http://localhost:3002/api/messages/" +
+          this.receiver +
+          "/" +
+          this.sender
+      );
+      this.messages = response.data;
+    },
+    async sendMessage() {
+      const response = await axios.post("http://localhost:3002/api/messages", {
+        id_sender: this.sender,
+        id_receiver: this.receiver,
+        content: this.newMessage,
+      });
+      //this.messages.push(response.data)
+      this.newMessage = "";
+      this.getMessages();
+    },
+  },
+};
+</script>
+
+<style scoped>
+.message-input {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-input input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.message-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.messages-list {
+  list-style: none;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.sent {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+.received {
+  background-color: #f0f0f0;
+  color: black;
+  align-self: flex-start;
+}
+</style>

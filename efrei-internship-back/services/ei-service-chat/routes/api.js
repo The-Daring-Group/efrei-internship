@@ -71,4 +71,18 @@ router.post("/messages", (req, res) => { // Post a message
     });
 });
 
+router.get("/user/:userId", (req, res) => { // Get user by id
+  sequelize
+    .query("SELECT * FROM person WHERE id = ?", {
+      replacements: [req.params.userId],
+      type: Sequelize.QueryTypes.SELECT,
+    })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
