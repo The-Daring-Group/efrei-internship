@@ -71,6 +71,33 @@ router.post("/messages", (req, res) => { // Post a message
     });
 });
 
+router.put("/messages/read/:messageId", (req, res) => { // Make a message as read
+  sequelize
+    .query("UPDATE chat SET is_read = true WHERE id = ?", {
+      replacements: [req.params.messageId],
+      type: Sequelize.QueryTypes.UPDATE,
+    })
+    .then((messages) => {
+      res.json(messages);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+router.get("/messages/unread/:userId1/:userId2", (req, res) => { // Get unread messages in a conversation
+  sequelize
+    .query("SELECT * FROM chat WHERE id_sender = ? AND id_receiver = ? AND is_read = false", {
+      replacements: [req.params.userId1, req.params.userId2],
+      type: Sequelize.QueryTypes.SELECT,
+    })
+    .then((messages) => {
+      res.json(messages);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
 router.get("/user/:userId", (req, res) => { // Get user by id
   sequelize
     .query("SELECT * FROM person WHERE id = ?", {

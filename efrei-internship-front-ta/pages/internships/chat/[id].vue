@@ -19,6 +19,7 @@
           received: message.id_receiver === sender,
         }"
       >
+        <span v-if="message.id_sender === sender && !message.is_read" class="unread-icon">🔴</span>
         {{ message.content }}
       </li>
     </ul>
@@ -52,7 +53,9 @@ export default {
   mounted() {
     //console.log(this.$route.params.id)
     this.getReceiverName();
-    this.getMessages();
+    this.getMessages().then(() => {
+      this.markUnreadMessagesAsRead();
+    });
   },
   methods: {
     async getReceiverName() {
@@ -68,7 +71,7 @@ export default {
           "/" +
           this.sender
       );
-      this.messages = response.data;
+      this.messages = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
     },
     async sendMessage() {
       const response = await axios.post("http://localhost:3002/api/messages", {
@@ -79,6 +82,27 @@ export default {
       //this.messages.push(response.data)
       this.newMessage = "";
       this.getMessages();
+    },
+    async markAsRead(messageId) {
+      const response = await axios.put(
+        "http://localhost:3002/api/messages/read/" + messageId
+      );
+      console.log(response.data);
+    },
+    async markUnreadMessagesAsRead() {
+      const unreadMessages = this.messages.filter(
+        (message) => message.id_receiver === this.sender && !message.is_read
+      );
+      console.log("this.messages", this.messages);
+      console.log("unreadMessages", unreadMessages);
+
+      // Créez un tableau de promesses pour toutes les requêtes de marquage comme lus
+      const markAsReadPromises = unreadMessages.map(async (message) => {
+        await this.markAsRead(message.id);
+      });
+
+      // Exécutez toutes les promesses simultanément
+      await Promise.all(markAsReadPromises);
     },
   },
 };

@@ -167,7 +167,8 @@ create table if not exists chat (
     content text not null,
     date timestamp not null default current_timestamp,
     id_sender int not null,
-    id_receiver int not null
+    id_receiver int not null,
+    is_read boolean not null default false
 );
 
 -- Trigger function to enforce foreign key constraint for id_sender
