@@ -211,3 +211,4 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_receiver();
 
 insert into student (firstname, lastname, email, id_efrei, password) values ('test','user','test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
 insert into academic_tutor (firstname, lastname, email, password) values ('academic','tutor','academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into company_tutor (firstname, lastname, email, password) values ('company','tutor','company.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
