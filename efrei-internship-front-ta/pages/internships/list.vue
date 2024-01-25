@@ -52,7 +52,6 @@
             baseURL: 'http://localhost:3002',
         }).then(function (fetchedInternships) {
             appendInternships(fetchedInternships.internship);
-            console.log(internships);
             loading.value = false;
         })
     };

@@ -4,10 +4,11 @@
         <div class="tw-text-2xl text-center tw-mb-2">Rate the student's presentation</div>
         <div class="tw-flex tw-items-center tw-flex-col">
             <div class="tw-bg-slate-200 tw-w-fit tw-p-2 tw-rounded-sm">
-                <div class="tw-text-xl tw-mb-1 tw-font-bold">Student information</div>
-                <div>{{ student.name }}</div>
-                <div>Company: {{ student.companyName }}</div>
-                <div>Duration: {{ student.startDate }} ➡️ {{ student.endDate }}</div>
+                <div class="tw-text-xl tw-mb-1 tw-font-bold tw-text-center">Student information</div>
+                <div v-if="!loading">Name: {{ internship.firstname + ' ' + internship.lastname }}</div>
+                <div v-if="!loading">Company: {{ internship.company_name }}</div>
+                <div v-if="!loading">Duration: {{ internship.start_date }} ➡️ {{ internship.end_date }}</div>
+                <div v-if="loading" class="text-center">Loading...</div>
             </div>
             <v-form class="tw-w-full">
                 <v-container>
@@ -48,13 +49,30 @@
 </template>
 
 <script setup>
-    // TO DO : Link to microservice
-    const student = {
-        name: "Antoine Lachaud",
-        companyName: "Microsoft",
-        startDate: formatDate("2024-03-11"),
-        endDate: formatDate("2024-09-19"),
+    const loading = ref(true);
+    let internship;
+    const route = useRoute();
+    const internshipID = route.params.id;
+
+    onMounted(() => {
+        getInternship();
+    });
+
+    const getInternship = () => {
+
+        $fetch(`/api/get-internship/${internshipID}`, {
+            method: 'GET',
+            baseURL: 'http://localhost:3002',
+        }).then(function (fetchedInternship) {
+            setInternship(fetchedInternship);
+            console.log(internship.firstname);
+            loading.value = false;
+        })
     };
+
+    const setInternship = (newInternship) => {
+        internship = newInternship[0];
+    } 
 
     var grade;
     var comment;
