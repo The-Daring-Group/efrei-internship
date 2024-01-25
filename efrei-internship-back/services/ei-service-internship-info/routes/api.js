@@ -30,6 +30,28 @@ router.post("/create-internship", async (req, res) => {
     res.status(200).json({ message: "Internship created" });
 });
 
+router.post("/rate-internship-presentation", async (req, res) => {
+    const { comment, grade, internshipID } = req.body;
+    try {
+        // Get internship data first
+        const internshipQuery = await sequelize.query(
+            `SELECT * FROM internship WHERE id = ${internshipID}`
+        );
+
+        const internship = internshipQuery[0][0];
+
+        await sequelize.query(
+            `INSERT INTO evaluation (grade, commentary, id_student, id_academic_tutor, id_company_tutor)
+            VALUES ('${grade}', '${comment}', '${internship.id_student}', '${internship.id_academic_tutor}', '${internship.id_company_tutor}')`
+        );
+        res.status(200).json({ message: "Internship rated successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+        return;
+    }
+});
+
 router.get("/get-internship-student/:id_student", async (req, res) => {
     const { id_student } = req.params
     try {

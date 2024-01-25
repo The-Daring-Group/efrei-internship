@@ -22,6 +22,7 @@
                                 required
                                 label="Comment"
                                 clearable
+                                v-model="comment"
                                 hint="Enter a comment about the student's presentation"
                             ></v-text-field>
                         </v-col>
@@ -35,6 +36,7 @@
                                 label="Grade"
                                 single-line
                                 clearable
+                                v-model="grade"
                                 hint="Rate the student's presentation /20"
                             ></v-text-field>
                         </v-col>
@@ -43,7 +45,7 @@
             </v-form>
         </div>
         <div class="text-center">
-            <button type="button" class="btn-submit">Submit</button>
+            <button type="button" class="btn-submit" @click="rateInternshipPresentation">Submit</button>
         </div>
     </div>
 </template>
@@ -53,13 +55,17 @@
     let internship;
     const route = useRoute();
     const internshipID = route.params.id;
+    // const grade = 0;
+    // const comment = '';
+
+    const grade = ref(0);
+    const comment = ref('');
 
     onMounted(() => {
         getInternship();
     });
 
     const getInternship = () => {
-
         $fetch(`/api/get-internship/${internshipID}`, {
             method: 'GET',
             baseURL: 'http://localhost:3002',
@@ -72,17 +78,17 @@
 
     const setInternship = (newInternship) => {
         internship = newInternship[0];
-    } 
+    }
 
-    var grade;
-    var comment;
-
-    function formatDate(date) {
-        const formattedDate = new Date(date);
-        const year = formattedDate.toLocaleString("default", { year: "numeric" });
-        const month = formattedDate.toLocaleString("default", { month: "2-digit" });
-        const day = formattedDate.toLocaleString("default", { day: "2-digit" });
-
-        return `${year} ${month} ${day}`;
+    const rateInternshipPresentation = () => {
+        $fetch(`/api/rate-internship-presentation`, {
+            method: 'POST',
+            baseURL: 'http://localhost:3002',
+            body: {
+                grade: grade.value,
+                comment: comment.value,
+                internshipID: internshipID
+            }
+        })
     }
 </script>
