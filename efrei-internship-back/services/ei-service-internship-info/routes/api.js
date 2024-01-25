@@ -26,6 +26,7 @@ try {
 
 router.post("/create-internship", async (req, res) => {
   const { id_student, title, company, description, startDate, endDate, email_academic_tutor, email_company_tutor } = req.body
+    console.log(id_student, title, company, description, startDate, endDate, email_academic_tutor, email_company_tutor)
   try {
         const id_academic_tutor = await sequelize.query(
             `SELECT id FROM academic_tutor WHERE email = '${email_academic_tutor}'`
@@ -33,10 +34,11 @@ router.post("/create-internship", async (req, res) => {
         const id_company_tutor = await sequelize.query(
             `SELECT id FROM company_tutor WHERE email = '${email_company_tutor}'`
         );
-        //console.log(id_company_tutor[0])
+      console.log(id_academic_tutor[0][0].id)
+      console.log(id_company_tutor[0][0])
       await sequelize.query(
-          `INSERT INTO internship (title, startDate, endDate, description, company_name, id_student, id_academic_tutor, id_company_tutor) 
-          VALUES ('${title}', '${startDate}', '${endDate}', '${description}', '${company}', ${id_student}, ${id_academic_tutor}, '${id_company_tutor}')`
+          `INSERT INTO internship (title, start_date, end_date, description, company_name, id_student, id_academic_tutor, id_company_tutor) 
+          VALUES ('${title}', TO_DATE('${startDate}', 'YYYY-MM-DD'), TO_DATE('${endDate}', 'YYYY-MM-DD'), '${description}', '${company}', ${id_student}, ${id_academic_tutor[0][0].id}, '${id_company_tutor[0][0].id}')`
       );
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -14,17 +14,13 @@
       <textarea id="description" v-model="internshipData.description" placeholder="Description"></textarea>
     </div>
     <div>
-      <label for="tutor">Location</label>
-      <input id="tutor" v-model="internshipData.location" placeholder="Location"/>
-    </div>
-    <div>
       <div id="tutors">
         <label id="tutorA" for="tutor">Tutor Academy Email</label>
         <label id="tutorC" for="tutor">Tutor Company Email</label>
       </div>
       <div id="tutorsInput">
-        <input id="tutor" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email"/>
-        <input id="tutor" v-model="internshipData.tutorCompany" placeholder="Tutor Academy Email"/>
+        <input id="tutor" type="email" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email"/>
+        <input id="tutor" type="email" v-model="internshipData.tutorCompany" placeholder="Tutor Company Email"/>
       </div>
     </div>
     <div>
@@ -46,11 +42,11 @@ import 'flatpickr/dist/flatpickr.min.css';
 export default {
   mounted() {
     flatpickr(this.$refs.startDate, {
-      dateFormat: 'd-m-Y',
+      dateFormat: 'Y-m-d',
     });
 
     flatpickr(this.$refs.endDate, {
-      dateFormat: 'd-m-Y',
+      dateFormat: 'Y-m-d',
     });
   },
   data() {
@@ -62,14 +58,35 @@ export default {
         tutorAcademy: '',
         tutorCompany: '',
         startDate: '',
-        endDate: '',
-        location: ''
+        endDate: ''
       },
     };
   },
   methods: {
-    submitData() {
-      console.log(this.internshipData);
+    async submitData() {
+      console.log(this.internshipData)
+      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/create-internship", {
+        method: 'post',
+        body: {
+          id_student: 1,
+          title: this.internshipData.title,
+          company: this.internshipData.company,
+          description: this.internshipData.description,
+          startDate: this.internshipData.startDate,
+          endDate: this.internshipData.endDate,
+          email_academic_tutor: this.internshipData.tutorAcademy,
+          email_company_tutor: this.internshipData.tutorCompany
+        },
+        onRequestError({ request, options, error }) {
+          console.log("error" + error)
+        },
+        async onResponse({request, response, options}) {
+          await navigateTo('/internship/Internships')
+        },
+        onResponseError({ request, response, options }) {
+          console.log("error" + response)
+        }
+      })
     },
   },
 };
