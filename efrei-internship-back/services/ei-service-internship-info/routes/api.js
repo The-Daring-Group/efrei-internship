@@ -34,8 +34,11 @@ router.post("/create-internship", async (req, res) => {
         const id_company_tutor = await sequelize.query(
             `SELECT id FROM company_tutor WHERE email = '${email_company_tutor}'`
         );
-      console.log(id_academic_tutor[0][0].id)
-      console.log(id_company_tutor[0][0])
+
+        if(id_academic_tutor[0].length === 0 || id_company_tutor[0].length === 0) {
+            res.status(500).json({ message: "Academic tutor or company tutor not found" });
+            return;
+        }
       await sequelize.query(
           `INSERT INTO internship (title, start_date, end_date, description, company_name, id_student, id_academic_tutor, id_company_tutor) 
           VALUES ('${title}', TO_DATE('${startDate}', 'YYYY-MM-DD'), TO_DATE('${endDate}', 'YYYY-MM-DD'), '${description}', '${company}', ${id_student}, ${id_academic_tutor[0][0].id}, '${id_company_tutor[0][0].id}')`
