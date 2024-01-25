@@ -8,7 +8,16 @@
         </ul>
       </nav>
     </header>
-    <h1 class="text-3xl font-bold text-center mb-4">Chat with <b>{{ receiverName }}</b></h1>
+
+    <div class="navigation-buttons">
+      <button v-if="conversationBefore" @click="navigateConversation(-1)">
+        &lt; Previous
+      </button>
+      <h1 class="text-3xl font-bold text-center tw-mr-4 tw-ml-4">Chat with <b>{{ receiverName }}</b></h1>
+      <button v-if="conversationAfter" @click="navigateConversation(1)">
+        Next &gt;
+      </button>
+    </div>
 
     <!-- Liste des messages -->
     <ul class="messages-list">
@@ -50,11 +59,19 @@ export default {
       messages: [],
       newMessage: "",
       intervalId: null,
+      conversationBefore: false,
+      conversationAfter: false,
+      internshipsId: null,
+      indexReceiver: null,
     };
   },
+  created() {
+    //console.log("this.$route.query.i",this.$route.query.i);
+    this.internshipsId = this.$route.query.i;
+  },
   mounted() {
-    //console.log(this.$route.params.id)
     this.getReceiverName();
+    this.isConversationBeforeAfter();
     this.getMessages().then(() => {
       this.markUnreadMessagesAsRead();
     });
@@ -62,6 +79,7 @@ export default {
     // Rechargez les messages toutes les 5 secondes
     this.intervalId = setInterval(() => {
       this.getMessages().then(() => {
+        //console.log("interval getMessages")
         this.markUnreadMessagesAsRead();
       });
     }, 7000);
@@ -109,7 +127,7 @@ export default {
       const unreadMessages = this.messages.filter(
         (message) => message.id_receiver === this.sender && !message.is_read
       );
-      console.log("unreadMessages", unreadMessages);
+      //console.log("unreadMessages", unreadMessages);
 
       // Créez un tableau de promesses pour toutes les requêtes de marquage comme lus
       const markAsReadPromises = unreadMessages.map(async (message) => {
@@ -118,6 +136,30 @@ export default {
 
       // Exécutez toutes les promesses simultanément
       await Promise.all(markAsReadPromises);
+    },
+    async isConversationBeforeAfter() {
+      this.indexReceiver = this.internshipsId.indexOf(this.receiver);
+      
+      // If receiver is not found or it is the first element, set false
+      if (this.indexReceiver <= 0) {
+        this.conversationBefore = false;
+      } else { // If there is an element before receiver in internshipsId, set true
+        this.conversationBefore = true;
+      }
+      
+      // If receiver is not found or it is the last element, set false
+      if (this.indexReceiver < 0 || this.indexReceiver === this.internshipsId.length - 1) {
+        this.conversationAfter = false;
+      } else {
+        // If there is an element after receiver in internshipsId, set true
+        this.conversationAfter = true;
+      }
+    },
+    navigateConversation(offset) {
+      clearInterval(this.intervalId);
+      const newIndex = this.indexReceiver + offset;
+      const id = this.internshipsId[newIndex];
+      this.$router.push({ path: `/internships/chat/${id}`, query: { i: this.internshipsId } });
     },
   },
 };
@@ -173,5 +215,25 @@ export default {
   background-color: #f0f0f0;
   color: black;
   align-self: flex-start;
+}
+
+
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.navigation-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.navigation-buttons button:hover {
+  background-color: #0069d9;
 }
 </style>
