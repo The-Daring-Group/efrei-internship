@@ -18,8 +18,14 @@
       <input id="tutor" v-model="internshipData.location" placeholder="Location"/>
     </div>
     <div>
-      <label for="tutor">Tutor</label>
-      <input id="tutor" v-model="internshipData.tutor" placeholder="Tutor"/>
+      <div id="tutors">
+        <label id="tutorA" for="tutor">Tutor Academy Email</label>
+        <label id="tutorC" for="tutor">Tutor Company Email</label>
+      </div>
+      <div id="tutorsInput">
+        <input id="tutor" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email"/>
+        <input id="tutor" v-model="internshipData.tutorCompany" placeholder="Tutor Academy Email"/>
+      </div>
     </div>
     <div>
       <label for="startDate">Start Date</label>
@@ -53,7 +59,8 @@ export default {
         title: '',
         company: '',
         description: '',
-        tutor: '',
+        tutorAcademy: '',
+        tutorCompany: '',
         startDate: '',
         endDate: '',
         location: ''
@@ -99,5 +106,16 @@ export default {
 
   button:hover {
     transform: scale(1.2);
+  }
+  #tutors {
+    display: flex;
+  }
+  #tutorsInput {
+    display: flex;
+  }
+  #tutorC {
+    position: absolute;
+    left: 54.5%;
+    transform: translateX(-50%);
   }
 </style>
