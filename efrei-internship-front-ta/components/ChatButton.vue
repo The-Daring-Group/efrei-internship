@@ -32,7 +32,6 @@
             }
         },
         mounted() {
-            console.log(this.internshipsId) // [1,2]
             this.getUnreadCount()
         },
         methods: {
@@ -40,7 +39,7 @@
                 const response = await axios.get(
                     "http://localhost:3002/api/messages/unread/" + this.userId + "/" + this.sender
                 );
-                console.log(response.data.length)
+                //console.log(response.data.length)
                 this.unreadCount = response.data.length
             }
         }

@@ -10,11 +10,11 @@
     </header>
 
     <div class="navigation-buttons">
-      <button v-if="conversationBefore" @click="navigateConversation(-1)">
+      <button :disabled="!conversationBefore" @click="navigateConversation(-1)">
         &lt; Previous
       </button>
       <h1 class="text-3xl font-bold text-center tw-mr-4 tw-ml-4">Chat with <b>{{ receiverName }}</b></h1>
-      <button v-if="conversationAfter" @click="navigateConversation(1)">
+      <button :disabled="!conversationAfter" @click="navigateConversation(1)">
         Next &gt;
       </button>
     </div>
@@ -146,7 +146,7 @@ export default {
       } else { // If there is an element before receiver in internshipsId, set true
         this.conversationBefore = true;
       }
-      
+
       // If receiver is not found or it is the last element, set false
       if (this.indexReceiver < 0 || this.indexReceiver === this.internshipsId.length - 1) {
         this.conversationAfter = false;
@@ -235,5 +235,10 @@ export default {
 
 .navigation-buttons button:hover {
   background-color: #0069d9;
+}
+
+.navigation-buttons button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 }
 </style>
