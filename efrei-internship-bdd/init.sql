@@ -64,6 +64,34 @@ create table if not exists document (
     constraint fk_company_tutor foreign key (id_company_tutor) references person(id_efrei)
 );
 
+create table if not exists questionnary (
+    id serial primary key,
+    type varchar(255) primary key,
+    name varchar(255) not null,
+    url varchar(255) not null
+);
+
+create table if not exists question (
+    id serial primary key,
+    name varchar(255) not null,
+    type varchar(255) not null,
+    type_questionnary varchar(255) not null,
+    constraint fk_questionnary foreign key (type_questionnary) references questionnary(type)
+);
+
+create table if not exists response (
+    id serial primary key,
+    text varchar(255) not null,
+    id_student int not null,
+    id_academic_tutor int not null,
+    id_questionnary int not null,
+    id_question int not null
+    constraint fk_student foreign key (id_student) references person(id_efrei),
+    constraint fk_academic_tutor foreign key (id_academic_tutor) references person(id_efrei)
+    constraint fk_questionnary foreign key (id_questionnary) references questionnary(id)
+    constraint fk_question foreign key (id_question) references question(id)
+);
+
 create table if not exists chat (
     id serial primary key,
     content text not null,
