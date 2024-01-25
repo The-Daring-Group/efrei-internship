@@ -11,6 +11,8 @@ ALTER ROLE ei_user IN DATABASE db_efrei_internship SET search_path TO efrei_inte
 
 create table if not exists person (
     id serial primary key,
+    firstname varchar(255) not null,
+    lastname varchar(255) not null,
     email varchar(255) not null,
     password varchar(255) not null
 );
@@ -165,7 +167,8 @@ create table if not exists chat (
     content text not null,
     date timestamp not null default current_timestamp,
     id_sender int not null,
-    id_receiver int not null
+    id_receiver int not null,
+    is_read boolean not null default false
 );
 
 -- Trigger function to enforce foreign key constraint for id_sender
@@ -206,8 +209,8 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_receiver();
 
 --------------------------------------------------------------------------------------------------------------
 
-insert into student (email, id_efrei, password) values ('test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
-insert into academic_tutor (email, password) values ('academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into student (firstname, lastname, email, id_efrei, password) values ('test','user','test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
+insert into academic_tutor (firstname, lastname, email, password) values ('academic','tutor','academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
 insert into company_tutor (email, password) values ('company.tutor@company.com', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
 insert into internship (title, start_date, end_date, description, company_name, id_student, id_academic_tutor, id_company_tutor) values (
     'DevOps Engineer', '2024-03-11', '2024-09-26', 
