@@ -38,7 +38,7 @@
 <script setup>
     const loading = ref(false);
     const internships = [];
-    const academicTutorID = 2;
+    const academicTutorID = 2; // Need to be changed to the real ID of the academic tutor
 
     onMounted(() => {
         loadInternships();
@@ -47,7 +47,7 @@
     const loadInternships = () => {
         loading.value = true;
 
-        $fetch(`/api/hello`, {
+        $fetch(`/api/get-internship-academic/${academicTutorID}`, {
             method: 'GET',
             baseURL: 'http://localhost:3002',
         }).then(function (fetchedInternships) {
@@ -62,24 +62,6 @@
             internships.push(internship);
         });
     };
-
-    // FAKE DATA. TO DO = Implement back-end service
-    const internshipsFake = ref([
-    {
-        id: 1,
-        student: "Antoine Lachaud",
-        companyName: "Microsoft",
-        startDate: formatDate("2024-03-11"),
-        endDate: formatDate("2024-09-19"),
-    },
-    {
-        id: 2,
-        student: "Romain Marques",
-        companyName: "Stellantis",
-        startDate: formatDate("2024-04-01"),
-        endDate: formatDate("2024-09-26"),
-    },
-    ]);
 
     function formatDate(date) {
         const formattedDate = new Date(date);
