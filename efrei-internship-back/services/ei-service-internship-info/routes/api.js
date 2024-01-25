@@ -62,17 +62,19 @@ router.get("get-internship-academic/:id_academic_tutor", async (req, res) => {
     }
 });
 
-router.get("hello", async (req, res) => {
+router.get("/hello", async (req, res) => {
     try {
         const internship = await sequelize.query(
-        `SELECT * FROM internship WHERE id_academic_tutor = 2`
+            `SELECT * FROM internship INNER JOIN student ON internship.id_student = student.id WHERE id_academic_tutor = 2`
         );
+
         if(internship[0].length === 0) {
             res.status(404).json({ message: "No internship found for the academic tutor" });
             return;
         }
         res.status(200).json({ internship: internship[0] }); // Return all internships linked to the selected academic tutor
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
 })

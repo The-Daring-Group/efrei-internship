@@ -14,10 +14,10 @@
                 </thead>
                 <tbody slot="body" slot-scope="{displayData}">
                     <tr v-for="internship in internships">
-                        <td class="text-center">{{ internship.student }}</td>
-                        <td class="text-center">{{ internship.companyName }}</td>
-                        <td class="text-center">{{ internship.startDate }}</td>
-                        <td class="text-center">{{ internship.endDate }}</td>
+                        <td class="text-center">{{ internship.firstname + ' ' + internship.lastname }}</td>
+                        <td class="text-center">{{ internship.company_name }}</td>
+                        <td class="text-center">{{ internship.start_date }}</td>
+                        <td class="text-center">{{ internship.end_date }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2 mr-4">
                               <NuxtLink :to="{ path: '/internships/fill-evaluation/' + internship.id }">Rate Report</NuxtLink>
@@ -37,7 +37,7 @@
 
 <script setup>
     const loading = ref(false);
-    const internships = ref([]);
+    const internships = [];
     const academicTutorID = 2;
 
     onMounted(() => {
@@ -50,17 +50,17 @@
         $fetch(`/api/hello`, {
             method: 'GET',
             baseURL: 'http://localhost:3002',
-        }).then(function (internships) {
+        }).then(function (fetchedInternships) {
+            appendInternships(fetchedInternships.internship);
             console.log(internships);
-            appendInternships(internships.data);
             loading.value = false;
         })
     };
 
     const appendInternships = (newInternships) => {
         newInternships.forEach((internship) => {
-            internships.value.push(internship);
-        })
+            internships.push(internship);
+        });
     };
 
     // FAKE DATA. TO DO = Implement back-end service
