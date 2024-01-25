@@ -18,6 +18,7 @@
                         <td class="text-center">{{ internship.startDate }}</td>
                         <td class="text-center">{{ internship.endDate }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
+                            <ChatButton :userId="internship.id" :sender="ta" />
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2 mr-4">
                               <NuxtLink :to="{ path: '/internships/fill-evaluation/' + internship.id }">Rate Report</NuxtLink>
                                 <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
@@ -53,6 +54,8 @@
         endDate: formatDate("2024-09-26"),
     },
     ]);
+
+    const ta = 2;
 
     function formatDate(date) {
         const formattedDate = new Date(date);

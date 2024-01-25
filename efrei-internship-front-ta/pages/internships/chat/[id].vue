@@ -4,6 +4,7 @@
       <nav>
         <ul>
           <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/internships/list">Internships</NuxtLink></li>
         </ul>
       </nav>
     </header>
@@ -108,7 +109,6 @@ export default {
       const unreadMessages = this.messages.filter(
         (message) => message.id_receiver === this.sender && !message.is_read
       );
-      console.log("this.messages", this.messages);
       console.log("unreadMessages", unreadMessages);
 
       // Créez un tableau de promesses pour toutes les requêtes de marquage comme lus
