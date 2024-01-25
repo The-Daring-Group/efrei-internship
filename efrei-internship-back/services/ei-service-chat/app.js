@@ -7,18 +7,12 @@ const apiRouter = require('./routes/api.js')
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:8080' }))
+app.use(cors({ origin: ['http://localhost:8000', 'http://localhost:8001']}))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }))
 
 app.use('/api/', apiRouter)
-
-const port = process.env.PORT || 3002
-
-app.listen(port, () => {
-  console.log('Server listening on port ' + port)
-})
 
 module.exports = app
