@@ -98,4 +98,25 @@ router.get("get-internship-company/:id_company_tutor", async (req, res) => {
     }
 });
 
+router.post("/evaluate", async (req, res) => {
+    const {id_student, id_academic_tutor, email_company_tutor, type_document, grade, commentary} = req.body
+    try {
+        const id_company_tutor = await sequelize.query(
+            `SELECT id FROM company_tutor WHERE email = '${email_company_tutor}'`
+        );
+        if (id_company_tutor[0].length === 0) {
+            res.status(500).json({ message: "Company tutor not found" });
+            return;
+        }
+        await sequelize.query(
+            `INSERT INTO evaluation (type_document, grade, commentary, id_student, id_academic_tutor, id_company_tutor) 
+            VALUES ('${type_document}', ${grade}, '${commentary}', ${id_student}, ${id_academic_tutor}, '${id_company_tutor[0][0].id}')`
+        );
+        res.status(200).json({ message: "Evaluation created" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+});
+
 module.exports = router;
