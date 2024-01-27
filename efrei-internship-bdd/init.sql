@@ -113,6 +113,7 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_company_tutor();
 
 create table if not exists evaluation (
     id serial primary key,
+    type_document varchar(255) not null,
     grade int not null,
     commentary text,
     id_student int not null,

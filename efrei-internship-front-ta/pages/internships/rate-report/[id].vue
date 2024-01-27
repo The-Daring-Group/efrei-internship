@@ -16,12 +16,21 @@
                             cols="12"
                             md="9"
                         >
+                          <v-text-field
+                                :counter="100"
+                                required
+                                label="email company tutor"
+                                clearable
+                                hint="Enter the email of the company tutor"
+                                v-model="email_company_tutor"
+                            ></v-text-field>
                             <v-text-field
                                 :counter="500"
                                 required
                                 label="Comment"
                                 clearable
                                 hint="Enter a comment about the student's report"
+                                v-model="comment"
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -35,6 +44,7 @@
                                 single-line
                                 clearable
                                 hint="Rate the student's report /20"
+                                v-model="grade"
                             ></v-text-field>
                         </v-col>
                     </v-row>
@@ -42,22 +52,24 @@
             </v-form>
         </div>
         <div class="text-center">
-            <button type="button" class="btn-submit">Submit</button>
+            <button type="button" class="btn-submit" @click="submitReport">Submit</button>
         </div>
     </div>
 </template>
 
 <script setup>
-    // TO DO : Link to microservice
+    import { ref } from 'vue';
+    const route = useRoute()
+    const grade = ref('');
+    const comment = ref('');
+    const email_company_tutor = ref('');
+    const page = ref(route.params.id)
     const student = {
         name: "Antoine Lachaud",
         companyName: "Microsoft",
         startDate: formatDate("2024-03-11"),
         endDate: formatDate("2024-09-19"),
     };
-
-    var grade;
-    var comment;
 
     function formatDate(date) {
         const formattedDate = new Date(date);
@@ -66,5 +78,27 @@
         const day = formattedDate.toLocaleString("default", { day: "2-digit" });
 
         return `${year} ${month} ${day}`;
+    }
+    async function submitReport() {
+      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
+        method: 'post',
+        body: {
+          id_student: page,
+          id_academic_tutor: "2", // TODO a changer
+          email_company_tutor: email_company_tutor,
+          type_document: "report",
+          grade: grade,
+          commentary: comment
+        },
+        onRequestError({request, options, error}) {
+          console.log("error" + error)
+        },
+        async onResponse({request, response, options}) {
+          console.log("success" + response)
+        },
+        onResponseError({request, response, options}) {
+          console.log("error" + response)
+        }
+      })
     }
 </script>

@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     async submitData() {
-      console.log(this.internshipData)
       const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/create-internship", {
         method: 'post',
         body: {
