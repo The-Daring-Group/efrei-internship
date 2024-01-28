@@ -3,7 +3,8 @@ const session = require('express-session')
 const logger = require('morgan')
 const cors = require('cors')
 
-const apiRouter = require('./routes/api.js')
+const apiRouterInternship = require('./routes/apiInternship.js')
+const apiRouterEvaluation = require('./routes/apiEvaluation.js')
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }))
 
-app.use('/api/', apiRouter)
+app.use('/api/', apiRouterInternship)
+app.use('/api/', apiRouterEvaluation)
 
 module.exports = app
