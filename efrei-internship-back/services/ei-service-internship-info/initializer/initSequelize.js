@@ -1,6 +1,6 @@
 const data_db = require('../.data_db');
 
-const { Sequelize } = require("sequelize");
+const { Sequelize, QueryTypes } = require("sequelize");
 
 const sequelize = new Sequelize(
   "db_efrei_internship",
@@ -21,4 +21,4 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-module.exports = {sequelize};
+module.exports = {sequelize, QueryTypes};

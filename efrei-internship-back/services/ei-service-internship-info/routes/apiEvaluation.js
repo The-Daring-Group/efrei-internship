@@ -1,12 +1,15 @@
 const {router} = require('../initializer/initRouter.js');
-const {sequelize} = require('../initializer/initSequelize.js');
-const {QueryTypes} = require("sequelize");
+const {sequelize, QueryTypes} = require('../initializer/initSequelize.js');
 
 router.post("/evaluate", async (req, res) => {
     const {id_student, id_academic_tutor, email_company_tutor, type_document, grade, commentary} = req.body
     try {
         const id_company_tutor = await sequelize.query(
-            `SELECT id FROM company_tutor WHERE email = '${email_company_tutor}'`
+            `SELECT id FROM company_tutor WHERE email = :email_company_tutor`,
+            {
+                replacements: {email_company_tutor},
+                type: QueryTypes.SELECT,
+            }
         );
         if (id_company_tutor[0].length === 0) {
             res.status(500).json({ message: "Company tutor not found" });
@@ -14,7 +17,11 @@ router.post("/evaluate", async (req, res) => {
         }
         await sequelize.query(
             `INSERT INTO evaluation (type_document, grade, commentary, id_student, id_academic_tutor, id_company_tutor) 
-            VALUES ('${type_document}', ${grade}, '${commentary}', ${id_student}, ${id_academic_tutor}, '${id_company_tutor[0][0].id}')`
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            {
+                replacements: [type_document, grade, commentary, id_student, id_academic_tutor, id_company_tutor[0].id],
+                type: QueryTypes.INSERT,
+            }
         );
         res.status(200).json({ message: "Evaluation created" });
     } catch (error) {
