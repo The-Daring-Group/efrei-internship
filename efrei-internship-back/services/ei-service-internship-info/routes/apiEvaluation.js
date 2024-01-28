@@ -1,5 +1,6 @@
 const {router} = require('../initializer/initRouter.js');
 const {sequelize} = require('../initializer/initSequelize.js');
+const {QueryTypes} = require("sequelize");
 
 router.post("/evaluate", async (req, res) => {
     const {id_student, id_academic_tutor, email_company_tutor, type_document, grade, commentary} = req.body
@@ -25,7 +26,11 @@ router.get("/get-evaluation-student/:id_student", async (req, res) => {
     const {id_student} = req.params
     try {
         const result = await sequelize.query(
-            `SELECT * FROM evaluation WHERE id_student = ${id_student}`
+            `SELECT * FROM evaluation WHERE id_student = :id_student`,
+            {
+                replacements: {id_student},
+                type: QueryTypes.SELECT,
+            }
         );
         const evaluation = result[0];
         if (evaluation.length === 0) {
