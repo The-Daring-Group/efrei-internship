@@ -98,7 +98,7 @@ router.get("/messages/unread/:userId1/:userId2", (req, res) => { // Get unread m
     });
 });
 
-// TODO Can be deleted when the request is implemented in apiInternship.js of Auth
+// TODO Can be deleted when the request is implemented in api.js of Auth
 router.get("/user/:userId", (req, res) => { // Get user by id
   sequelize
     .query("SELECT * FROM person WHERE id = ?", {
