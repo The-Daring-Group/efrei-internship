@@ -1,6 +1,40 @@
-<script setup>
-import { useSessionStore } from '#imports';
+<script setup lang="ts">
+import { useSessionStore, type UserType } from '#imports';
+
 const sessionStore = useSessionStore();
+
+const efreiId = ref('')
+const password = ref('')
+
+const isError = ref(false)
+const errorMessage = ref('')
+
+const login = async () => {
+  try {
+    const response = await useFetch<UserType>('http://localhost:3000/api/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        efreiId: efreiId.value,
+        password: password.value,
+      }),
+    })
+
+    if (response.status.value === "success" && response.data.value !== null) {
+      sessionStore.login(response.data.value)
+      navigateTo('/')
+    } else {
+      isError.value = true
+      if (response.error.value !== null) {
+        errorMessage.value = response.error.value.data.error
+      } else {
+        errorMessage.value = "Une erreur est survenue"
+      }
+    }
+  } catch (error) {
+    isError.value = true
+    errorMessage.value = (error as Error).message;
+  }
+}
 </script>
 
 <template>
@@ -11,49 +45,14 @@ const sessionStore = useSessionStore();
         <h3>Utiliser votre compte Efrei</h3>
       </div>
       <p v-if="isError">{{ errorMessage }}</p>
-      <form>
-        <input type="number" v-model="efreiId" required placeholder="Numéro Efrei"/>
-        <input type="password" v-model="password" required placeholder="Mot de passe"/>
+      <form @submit.prevent="login" id="login">
+        <input type="number" v-model="efreiId" required placeholder="Numéro Efrei" />
+        <input type="password" v-model="password" required placeholder="Mot de passe" />
       </form>
-      <button type="submit" @click="login">Se connecter</button>
+      <button type="submit" form="login">Se connecter</button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      efreiId: '',
-      password: '',
-      isError: false,
-      errorMessage: '',
-    }
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await useFetch('http://localhost:3000/api/login', {
-          method: 'POST',
-          body: JSON.stringify({
-            efreiId: this.efreiId,
-            password: this.password,
-          }),
-        })
-
-        if (response.status === 200) {
-          sessionStore.login(response.data)
-          console.log(sessionStore.getUser())
-          this.$router.push('/')
-        }
-      } catch (error) {
-        this.isError = true
-        this.errorMessage = error
-      }
-    },
-  },
-}
-</script>
 
 <style scoped>
 #background {
