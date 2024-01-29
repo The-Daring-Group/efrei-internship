@@ -19,9 +19,10 @@ export default defineNuxtConfig({
     [
       '@pinia/nuxt',
       {
-        autoImports: ['defineStore', 'acceptHMRUpdate']
+        autoImports: ['defineStore', 'acceptHMRUpdate', 'type']
       },
-    ]
+    ],
+    '@pinia-plugin-persistedstate/nuxt'
   ],
   postcss: {
     plugins: {

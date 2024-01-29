@@ -1,5 +1,40 @@
-<script setup>
-import axios from 'axios'
+<script setup lang="ts">
+import { useSessionStore, type UserType } from '#imports';
+
+const sessionStore = useSessionStore();
+
+const email = ref('')
+const password = ref('')
+
+const isError = ref(false)
+const errorMessage = ref('')
+
+const login = async () => {
+  try {
+    const response = await useFetch<UserType>('http://localhost:3000/api-staff/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    })
+
+    if (response.status.value === "success" && response.data.value !== null) {
+      sessionStore.login(response.data.value)
+      navigateTo('/')
+    } else {
+      isError.value = true
+      if (response.error.value !== null) {
+        errorMessage.value = response.error.value.data.error
+      } else {
+        errorMessage.value = "Une erreur est survenue"
+      }
+    }
+  } catch (error) {
+    isError.value = true
+    errorMessage.value = (error as Error).message;
+  }
+}
 </script>
 
 <template>
@@ -10,48 +45,14 @@ import axios from 'axios'
         <h3>Utiliser votre Email Efrei</h3>
       </div>
       <p v-if="isError">{{ errorMessage }}</p>
-      <form>
-        <input type="email" v-model="email" required placeholder="Email"/>
-        <input type="password" v-model="password" required placeholder="Mot de passe"/>
+      <form @submit.prevent="login" id="login">
+        <input type="email" v-model="email" required placeholder="Email" />
+        <input type="password" v-model="password" required placeholder="Mot de passe" />
       </form>
-      <button type="submit" @click="login">Se connecter</button>
+      <button type="submit" @click="login" form="login">Se connecter</button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      isError: false,
-      errorMessage: '',
-    }
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await axios.post('http://localhost:3000/api-staff/login', {
-          email: this.email,
-          password: this.password,
-        })
-
-        if (response.status === 200) {
-          // TODO: store token and user in vuex
-          // this.$store.commit('setToken', response.data.token)
-          // this.$store.commit('setUser', response.data.email)
-          console.log(response.data.email)
-          this.$router.push('/')
-        }
-      } catch (error) {
-        this.isError = true
-        this.errorMessage = error
-      }
-    },
-  },
-}
-</script>
 
 <style scoped>
 #background {

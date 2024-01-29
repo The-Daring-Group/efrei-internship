@@ -3,8 +3,8 @@ import { defineStore } from 'pinia'
 interface User {
   id: number
   email: string
-  firstName: string
-  lastName: string
+  firstname: string
+  lastname: string
 }
 
 export const useSessionStore = defineStore('session', {
@@ -12,10 +12,10 @@ export const useSessionStore = defineStore('session', {
     user: {
       id: -1,
       email: '',
-      firstName: '',
-      lastName: ''
+      firstname: '',
+      lastname: ''
     },
-    isAuthenticated: false
+    authenticated: false,
   }),
   getters: {
     getUser(): User {
@@ -27,17 +27,24 @@ export const useSessionStore = defineStore('session', {
   },
   actions: {
     login(user: User) {
-      this.isAuthenticated = true
+      this.authenticated = true
       this.user = user
     },
     logout() {
-      this.isAuthenticated = false
+      this.authenticated = false
       this.user = {
         id: -1,
         email: '',
-        firstName: '',
-        lastName: ''
+        firstname: '',
+        lastname: ''
       }
+    },
+    refresh() {
+      this.authenticated = !this.authenticated
+      this.authenticated = !this.authenticated
     }
   },
+  persist: true
 })
+
+export type { User as UserType }

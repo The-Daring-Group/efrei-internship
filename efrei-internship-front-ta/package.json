@@ -11,21 +11,23 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia/nuxt": "^0.5.1",
     "autoprefixer": "^10.4.17",
     "nuxt": "^3.9.3",
+    "pinia": "^2.1.7",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "vite-plugin-vuetify": "^2.0.1",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5",
-    "vuetify": "^3.5.0",
-    "pinia": "^2.1.7",
-    "@pinia/nuxt": "^0.5.1"
+    "vuetify": "^3.5.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.5",
-    "@mdi/font": "^7.4.47"
+    "@mdi/font": "^7.4.47",
+    "pinia-plugin-persistedstate": "^3.2.1"
   }
 }
