@@ -1,4 +1,6 @@
-const { router } = require('../initializer/initRouter.js');
+const express = require("express");
+const router = express.Router();
+
 const { sequelize, QueryTypes } = require('../initializer/initSequelize.js');
 const { bcrypt, salt } = require('../initializer/initBcrypt.js');
 

@@ -1,5 +1,8 @@
-const { router } = require('../initializer/initRouter.js');
+const express = require("express");
+const router = express.Router();
+
 const { sequelize, QueryTypes } = require('../initializer/initSequelize.js');
+const { bcrypt, salt } = require('../initializer/initBcrypt.js');
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -10,7 +13,7 @@ router.post("/login", async (req, res) => {
   if (user.length === 0) {
     res.status(401).json({ error: "User not found" });
   } else {
-    console.log(bcrypt.hashSync(password, 10)); //TODO: remove this line when we have enough users
+    console.log(bcrypt.hashSync(password, salt)); //TODO: remove this line when we have enough users
     const match = await bcrypt.compare(password, user[0].password);
     if (match) {
       req.session.user = user[0].email;
