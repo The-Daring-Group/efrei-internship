@@ -7,8 +7,11 @@ const { bcrypt, salt } = require('../initializer/initBcrypt.js');
 router.post("/login", async (req, res) => {
   const { efreiId, password } = req.body;
   const user = await sequelize.query(
-    `SELECT * FROM "student" WHERE id_efrei='${efreiId}'`,
-    { type: QueryTypes.SELECT }
+    `SELECT * FROM "student" WHERE id_efrei = :efreiId`,
+    {
+      type: QueryTypes.SELECT,
+      replacements: { efreiId: efreiId }
+    },
   );
   if (user.length === 0) {
     res.status(401).json({ error: "User not found" });
