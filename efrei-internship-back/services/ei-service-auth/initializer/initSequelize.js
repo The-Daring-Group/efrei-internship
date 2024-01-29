@@ -21,4 +21,6 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-module.exports = {sequelize};
+const QueryTypes = Sequelize.QueryTypes;
+
+module.exports = { sequelize, QueryTypes };
