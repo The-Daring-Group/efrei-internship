@@ -13,10 +13,10 @@ const login = async () => {
   try {
     const response = await useFetch<UserType>('http://localhost:3000/api/login', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         efreiId: efreiId.value,
         password: password.value,
-      }),
+      },
     })
 
     if (response.status.value === "success" && response.data.value !== null) {
@@ -24,10 +24,10 @@ const login = async () => {
       navigateTo('/')
     } else {
       isError.value = true
-      if (response.error.value !== null) {
+      if (response.error.value !== null && response.error.value.statusCode !== 500) {
         errorMessage.value = response.error.value.data.error
       } else {
-        errorMessage.value = "Une erreur est survenue"
+        errorMessage.value = "Back server is down"
       }
     }
   } catch (error) {
@@ -46,7 +46,7 @@ const login = async () => {
       </div>
       <p v-if="isError">{{ errorMessage }}</p>
       <form @submit.prevent="login" id="login">
-        <input type="number" v-model="efreiId" required placeholder="Numéro Efrei" />
+        <input type="text" maxlength="8" pattern="[0-9]{8}" v-model="efreiId" required placeholder="Numéro Efrei" />
         <input type="password" v-model="password" required placeholder="Mot de passe" />
       </form>
       <button type="submit" form="login">Se connecter</button>

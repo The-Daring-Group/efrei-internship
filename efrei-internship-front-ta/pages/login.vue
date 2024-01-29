@@ -13,10 +13,10 @@ const login = async () => {
   try {
     const response = await useFetch<UserType>('http://localhost:3000/api-staff/login', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         email: email.value,
         password: password.value,
-      }),
+      },
     })
 
     if (response.status.value === "success" && response.data.value !== null) {
@@ -24,10 +24,10 @@ const login = async () => {
       navigateTo('/')
     } else {
       isError.value = true
-      if (response.error.value !== null) {
+      if (response.error.value !== null && response.error.value.statusCode !== 500) {
         errorMessage.value = response.error.value.data.error
       } else {
-        errorMessage.value = "Une erreur est survenue"
+        errorMessage.value = "Back server is down"
       }
     }
   } catch (error) {
