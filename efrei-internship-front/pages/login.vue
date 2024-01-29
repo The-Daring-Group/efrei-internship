@@ -1,5 +1,6 @@
 <script setup>
-import axios from 'axios'
+import { useSessionStore } from '#imports';
+const sessionStore = useSessionStore();
 </script>
 
 <template>
@@ -32,16 +33,17 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post('http://localhost:3000/api/login', {
-          efreiId: this.efreiId,
-          password: this.password,
+        const response = await useFetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            efreiId: this.efreiId,
+            password: this.password,
+          }),
         })
 
         if (response.status === 200) {
-          // TODO: store token and user in vuex
-          // this.$store.commit('setToken', response.data.token)
-          // this.$store.commit('setUser', response.data.email)
-          console.log(response.data.email)
+          sessionStore.login(response.data)
+          console.log(sessionStore.getUser())
           this.$router.push('/')
         }
       } catch (error) {

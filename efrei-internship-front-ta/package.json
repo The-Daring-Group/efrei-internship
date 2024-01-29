@@ -18,13 +18,14 @@
     "vite-plugin-vuetify": "^2.0.1",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5",
-    "vuetify": "^3.5.0"
+    "vuetify": "^3.5.0",
+    "pinia": "^2.1.7",
+    "@pinia/nuxt": "^0.5.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.5",
-    "@mdi/font": "^7.4.47",
-    "axios": "^1.6.5"
+    "@mdi/font": "^7.4.47"
   }
 }

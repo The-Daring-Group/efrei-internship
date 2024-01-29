@@ -16,6 +16,12 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: ['defineStore', 'acceptHMRUpdate']
+      },
+    ]
   ],
   postcss: {
     plugins: {
@@ -30,4 +36,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  imports: {
+    dirs: ['stores']
+  }
 })
