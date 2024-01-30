@@ -7,7 +7,7 @@ interface User {
   lastname: string
 }
 
-export const useSessionStore = defineStore('session', {
+export const useSessionStore = defineStore('atSession', {
   state: () => ({
     user: {
       id: -1,
@@ -38,10 +38,6 @@ export const useSessionStore = defineStore('session', {
         firstname: '',
         lastname: ''
       }
-    },
-    refresh() {
-      this.authenticated = !this.authenticated
-      this.authenticated = !this.authenticated
     }
   },
   persist: true
