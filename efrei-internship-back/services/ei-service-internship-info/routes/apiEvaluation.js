@@ -39,13 +39,12 @@ router.get("/get-evaluation-student/:id_student", async (req, res) => {
                 type: QueryTypes.SELECT,
             }
         );
-        const evaluation = result[0];
-        if (evaluation.length === 0) {
+        if (result.length === 0) {
             res.status(404).json({message: "No evaluation found for the user"});
             return;
         }
 
-        res.status(200).json({evaluations: evaluation});
+        res.status(200).json({evaluations: result});
     } catch (error) {
         res.status(500).json({message: error.message});
     }

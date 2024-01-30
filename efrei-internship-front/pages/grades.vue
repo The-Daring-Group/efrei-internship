@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import { useSessionStore } from '#imports';
+const sessionStore = useSessionStore();
+const id_student = sessionStore.getUser.id
 export default {
   mounted() {
     this.getEvaluations();
@@ -43,11 +46,10 @@ export default {
   },
   methods: {
     async getEvaluations() {
-      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-evaluation-student/" + 1, {
+      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-evaluation-student/" + id_student, {
         method: 'get',
       })
       this.evaluations = data.value.evaluations
-      console.log(this.evaluations)
     },
   },
 };

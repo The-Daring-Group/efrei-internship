@@ -8,7 +8,7 @@ const apiRouterEvaluation = require('./routes/apiEvaluation.js')
 
 const app = express()
 
-app.use(cors({ origin: ['http://localhost:8080', "http://localhost:8000"] }))
+app.use(cors({ origin: ['http://localhost:8001', "http://localhost:8000"] }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

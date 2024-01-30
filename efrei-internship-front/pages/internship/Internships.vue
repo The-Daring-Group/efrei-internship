@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import { useSessionStore } from '#imports';
+const sessionStore = useSessionStore();
+const id_student = sessionStore.getUser.id
 export default {
   mounted() {
     this.getInternships();
@@ -53,7 +56,7 @@ export default {
   },
   methods: {
     async getInternships() {
-      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-student/" + 1, {
+      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-student/" + id_student, {
         method: 'get',
       })
       this.internships = data.value.internship
