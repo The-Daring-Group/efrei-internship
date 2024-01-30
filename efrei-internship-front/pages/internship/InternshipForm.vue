@@ -38,6 +38,9 @@
 <script>
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { useSessionStore } from '#imports';
+const sessionStore = useSessionStore();
+const id_student = sessionStore.getUser.id
 
 export default {
   mounted() {
@@ -67,7 +70,7 @@ export default {
       const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/create-internship", {
         method: 'post',
         body: {
-          id_student: 1,
+          id_student: id_student,
           title: this.internshipData.title,
           company: this.internshipData.company,
           description: this.internshipData.description,

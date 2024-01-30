@@ -59,11 +59,14 @@
 
 <script setup>
     import { ref } from 'vue';
+    import { useSessionStore } from '#imports';
+    const sessionStore = useSessionStore();
+    const id_academy_tutor = sessionStore.getUser.id
     const route = useRoute()
     const grade = ref('');
     const comment = ref('');
     const email_company_tutor = ref('');
-    const page = ref(route.params.id)
+    const student_id = ref(route.params.id)
     const student = {
         name: "Antoine Lachaud",
         companyName: "Microsoft",
@@ -83,10 +86,10 @@
       const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
         method: 'post',
         body: {
-          id_student: page,
-          id_academic_tutor: "2", // TODO a changer
+          id_student: student_id,
+          id_academic_tutor: id_academy_tutor, // TODO a changer
           email_company_tutor: email_company_tutor,
-          type_document: "report",
+          type_document: "Report",
           grade: grade,
           commentary: comment
         },
