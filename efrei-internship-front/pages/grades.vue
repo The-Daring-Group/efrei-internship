@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     async getEvaluations() {
-      console.log(id_student)
       const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-evaluation-student/" + id_student, {
         method: 'get',
       })
