@@ -61,7 +61,7 @@ export default {
     methods: {
       getStudentName,
         async getInternships() {
-            const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + 2, {
+            const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
                 method: 'get',
             })
             this.internships = data.value.internship

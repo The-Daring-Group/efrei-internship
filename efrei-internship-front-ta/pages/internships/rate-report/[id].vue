@@ -87,7 +87,7 @@
         method: 'post',
         body: {
           id_student: student_id,
-          id_academic_tutor: id_academy_tutor, // TODO a changer
+          id_academic_tutor: id_academy_tutor,
           email_company_tutor: email_company_tutor,
           type_document: "Report",
           grade: grade,
