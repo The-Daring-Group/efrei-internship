@@ -53,7 +53,7 @@ router.get("/get-internship-student/:id_student", async (req, res) => {
             res.status(404).json({ message: "No internship found for the user" });
             return;
         }
-        res.status(200).json({ internship: internship[0] });
+        res.status(200).json({ internship: internship });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
