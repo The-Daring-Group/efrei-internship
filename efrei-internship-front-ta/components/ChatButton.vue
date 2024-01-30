@@ -10,7 +10,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         props: {
             userId: {
@@ -36,11 +35,11 @@
         },
         methods: {
             async getUnreadCount() {
-                const response = await axios.get(
-                    "http://localhost:3002/api/messages/unread/" + this.userId + "/" + this.sender
-                );
-                //console.log(response.data.length)
-                this.unreadCount = response.data.length
+                const {data, pending, error, refresh} = await useFetch('http://localhost:3002/api/messages/unread/' + this.userId + "/" + this.sender, {
+                    method: 'GET',
+                })
+                //console.log(data.value)
+                this.unreadCount = data.value ? data.value.length : 0
             }
         }
     }
