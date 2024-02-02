@@ -5,9 +5,9 @@
         <div class="tw-flex tw-items-center tw-flex-col">
             <div class="tw-bg-slate-200 tw-w-fit tw-p-2 tw-rounded-sm">
                 <div class="tw-text-xl tw-mb-1 tw-font-bold">Student information</div>
-                <div>{{ student.name }}</div>
-                <div>Company: {{ student.companyName }}</div>
-                <div>Duration: {{ student.startDate }} ➡️ {{ student.endDate }}</div>
+                <div> {{this.getStudentName(this.studentName.id, [this.studentName])}}</div>
+                <div>Company: {{ this.internship.company_name }}</div>
+                <div>Duration: {{this.formatDate(this.internship.start_date)}} ➡️ {{this.formatDate(this.internship.end_date)}}</div>
             </div>
             <v-form class="tw-w-full">
                 <v-container>
@@ -52,12 +52,14 @@
             </v-form>
         </div>
         <div class="text-center">
-            <button type="button" class="btn-submit" @click="submitReport">Submit</button>
+            <button type="button" class="btn-submit" @click="this.submitReport">Submit</button>
         </div>
     </div>
 </template>
 
-<script setup>
+<script>
+
+    import { getStudentName } from "~/helper/HelpStudent.js";
     import { ref } from 'vue';
     import { useSessionStore } from '#imports';
     const sessionStore = useSessionStore();
@@ -66,42 +68,87 @@
     const grade = ref('');
     const comment = ref('');
     const email_company_tutor = ref('');
-    const student_id = ref(route.params.id)
-    const student = {
-        name: "Antoine Lachaud",
-        companyName: "Microsoft",
-        startDate: formatDate("2024-03-11"),
-        endDate: formatDate("2024-09-19"),
-    };
 
-    function formatDate(date) {
+    export default {
+      mounted() {
+        this.getInternships().then(() => {
+          this.getInfoStudent(this.internship.id_student)
+        });
+    },
+      data() {
+        return {
+            internship_id : this.$route.params.id,
+            internship: {
+                "id": 2,
+                "title": "",
+                "start_date": "",
+                "end_date": "",
+                "description": "",
+                "company_name": "",
+                "id_student": 1,
+                "id_academic_tutor": 2,
+                "id_company_tutor": 3
+            },
+            studentName: {
+              name: "Antoine Lachaud",
+              companyName: "Microsoft",
+              startDate: "2024-03-11",
+              endDate: "2024-09-19",
+            }
+        };
+    },
+    methods: {
+      formatDate(date) {
         const formattedDate = new Date(date);
-        const year = formattedDate.toLocaleString("default", { year: "numeric" });
-        const month = formattedDate.toLocaleString("default", { month: "2-digit" });
-        const day = formattedDate.toLocaleString("default", { day: "2-digit" });
+        const year = formattedDate.toLocaleString("default", {year: "numeric"});
+        const month = formattedDate.toLocaleString("default", {month: "2-digit"});
+        const day = formattedDate.toLocaleString("default", {day: "2-digit"});
 
-        return `${year} ${month} ${day}`;
+        return `${year}-${month}-${day}`;
+      },
+      async submitReport() {
+        const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
+          method: 'post',
+          body: {
+            id_student: this.internship.id_student,
+            id_academic_tutor: id_academy_tutor,
+            email_company_tutor: email_company_tutor,
+            type_document: "Report",
+            grade: grade,
+            commentary: comment
+          },
+          onRequestError({request, options, error}) {
+            console.log("error" + error)
+          },
+          async onResponse({request, response, options}) {
+            console.log("success" + response)
+          },
+          onResponseError({request, response, options}) {
+            console.log("error" + response)
+          }
+        })
+      },
+      getStudentName,
+      async getInternships() {
+        const {
+          data,
+          pending,
+          error,
+          refresh
+        } = await useFetch("http://localhost:3003/api/get-internship/" + this.internship_id, {
+          method: 'get',
+        })
+        this.internship = data.value.internship
+      },
+      async getInfoStudent(id_student) {
+        const {data, pending, error, refresh} = await useFetch("http://localhost:3000/api/getinfos", {
+          method: 'post',
+          body: {
+            id_student: id_student,
+          },
+        })
+        this.studentName = data.value
+      }
     }
-    async function submitReport() {
-      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
-        method: 'post',
-        body: {
-          id_student: student_id,
-          id_academic_tutor: id_academy_tutor,
-          email_company_tutor: email_company_tutor,
-          type_document: "Report",
-          grade: grade,
-          commentary: comment
-        },
-        onRequestError({request, options, error}) {
-          console.log("error" + error)
-        },
-        async onResponse({request, response, options}) {
-          console.log("success" + response)
-        },
-        onResponseError({request, response, options}) {
-          console.log("error" + response)
-        }
-      })
     }
 </script>

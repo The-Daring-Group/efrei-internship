@@ -39,7 +39,7 @@
 <script>
 
 import { useSessionStore } from '#imports';
-import { getStudentName} from "~/helper/HelpStudent.js";
+import { getStudentName } from "~/helper/HelpStudent.js";
 
 const sessionStore = useSessionStore();
 const id_academic_tutor = sessionStore.getUser.id
@@ -60,7 +60,7 @@ export default {
     },
     methods: {
       getStudentName,
-        async getInternships() {
+      async getInternships() {
             const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
                 method: 'get',
             })
