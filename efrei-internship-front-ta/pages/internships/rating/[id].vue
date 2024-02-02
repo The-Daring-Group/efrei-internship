@@ -52,7 +52,7 @@
 <script>
 
     import { getStudentName, formatDate } from "~/helper/HelpStudent.js";
-    import { ref } from 'vue';
+    import { parseStringRating } from "~/helper/HelpParser.js";
     import { useSessionStore } from '#imports';
     const sessionStore = useSessionStore();
 
@@ -66,7 +66,8 @@
         return {
             grade : "",
             comment : "",
-            internship_id : this.$route.params.id,
+            internship_id : parseStringRating(this.$route.params.id).id,
+            type : parseStringRating(this.$route.params.id).type,
             internship: {
                 "id": 2,
                 "title": "",
@@ -96,7 +97,7 @@
             id_student: this.internship.id_student,
             id_academic_tutor: this.internship.id_academic_tutor,
             id_company_tutor: this.internship.id_company_tutor,
-            type_document: "Report",
+            type_document: this.type,
             grade: this.grade,
             commentary: this.comment
           },
@@ -105,6 +106,7 @@
           },
           async onResponse({request, response, options}) {
             console.log("success" + response.toString())
+            await navigateTo('/internships/list')
           },
           onResponseError({request, response, options}) {
             console.log("error response" + response.toString())
