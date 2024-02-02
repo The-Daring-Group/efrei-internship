@@ -59,7 +59,7 @@
 
 <script>
 
-    import { getStudentName } from "~/helper/HelpStudent.js";
+    import { getStudentName, formatDate } from "~/helper/HelpStudent.js";
     import { ref } from 'vue';
     import { useSessionStore } from '#imports';
     const sessionStore = useSessionStore();
@@ -98,14 +98,8 @@
         };
     },
     methods: {
-      formatDate(date) {
-        const formattedDate = new Date(date);
-        const year = formattedDate.toLocaleString("default", {year: "numeric"});
-        const month = formattedDate.toLocaleString("default", {month: "2-digit"});
-        const day = formattedDate.toLocaleString("default", {day: "2-digit"});
-
-        return `${year}-${month}-${day}`;
-      },
+      getStudentName,
+      formatDate,
       async submitReport() {
         const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
           method: 'post',
@@ -128,7 +122,6 @@
           }
         })
       },
-      getStudentName,
       async getInternships() {
         const {
           data,
