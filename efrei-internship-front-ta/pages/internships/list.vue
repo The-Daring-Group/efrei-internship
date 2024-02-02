@@ -61,13 +61,13 @@ export default {
     methods: {
       getStudentName,
       async getInternships() {
-            const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
+            const {data} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
                 method: 'get',
             })
             this.internships = data.value.internship
         },
       async getInfoStudent(id_student) {
-        const {data, pending, error, refresh} = await useFetch("http://localhost:3000/api/getinfos", {
+        const {data} = await useFetch("http://localhost:3000/api/getinfos", {
           method: 'post',
           body: {
             id_student: id_student,

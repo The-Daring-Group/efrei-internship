@@ -56,8 +56,8 @@
         endDate: formatDate("2024-09-19"),
     };
 
-    var grade;
-    var comment;
+    let grade;
+    let comment;
 
     function formatDate(date) {
         const formattedDate = new Date(date);

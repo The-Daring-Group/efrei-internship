@@ -101,7 +101,7 @@
       getStudentName,
       formatDate,
       async submitReport() {
-        const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/evaluate", {
+        await useFetch("http://localhost:3003/api/evaluate", {
           method: 'post',
           body: {
             id_student: this.internship.id_student,
@@ -115,26 +115,21 @@
             console.log("error" + error)
           },
           async onResponse({request, response, options}) {
-            console.log("success" + response)
+            console.log("success" + response.toString())
           },
           onResponseError({request, response, options}) {
-            console.log("error" + response)
+            console.log("error" + response.toString())
           }
         })
       },
       async getInternships() {
-        const {
-          data,
-          pending,
-          error,
-          refresh
-        } = await useFetch("http://localhost:3003/api/get-internship/" + this.internship_id, {
+        const {data} = await useFetch("http://localhost:3003/api/get-internship/" + this.internship_id, {
           method: 'get',
         })
         this.internship = data.value.internship
       },
       async getInfoStudent(id_student) {
-        const {data, pending, error, refresh} = await useFetch("http://localhost:3000/api/getinfos", {
+        const {data} = await useFetch("http://localhost:3000/api/getinfos", {
           method: 'post',
           body: {
             id_student: id_student,
