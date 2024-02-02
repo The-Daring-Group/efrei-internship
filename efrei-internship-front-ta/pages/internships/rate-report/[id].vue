@@ -16,21 +16,13 @@
                             cols="12"
                             md="9"
                         >
-                          <v-text-field
-                                :counter="100"
-                                required
-                                label="email company tutor"
-                                clearable
-                                hint="Enter the email of the company tutor"
-                                v-model="email_company_tutor"
-                            ></v-text-field>
                             <v-text-field
                                 :counter="500"
                                 required
                                 label="Comment"
                                 clearable
                                 hint="Enter a comment about the student's report"
-                                v-model="comment"
+                                v-model="this.comment"
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -44,7 +36,7 @@
                                 single-line
                                 clearable
                                 hint="Rate the student's report /20"
-                                v-model="grade"
+                                v-model="this.grade"
                             ></v-text-field>
                         </v-col>
                     </v-row>
@@ -63,11 +55,6 @@
     import { ref } from 'vue';
     import { useSessionStore } from '#imports';
     const sessionStore = useSessionStore();
-    const id_academy_tutor = sessionStore.getUser.id
-    const route = useRoute()
-    const grade = ref('');
-    const comment = ref('');
-    const email_company_tutor = ref('');
 
     export default {
       mounted() {
@@ -77,6 +64,8 @@
     },
       data() {
         return {
+            grade : "",
+            comment : "",
             internship_id : this.$route.params.id,
             internship: {
                 "id": 2,
@@ -105,11 +94,11 @@
           method: 'post',
           body: {
             id_student: this.internship.id_student,
-            id_academic_tutor: id_academy_tutor,
-            email_company_tutor: email_company_tutor,
+            id_academic_tutor: this.internship.id_academic_tutor,
+            id_company_tutor: this.internship.id_company_tutor,
             type_document: "Report",
-            grade: grade,
-            commentary: comment
+            grade: this.grade,
+            commentary: this.comment
           },
           onRequestError({request, options, error}) {
             console.log("error" + error)
@@ -118,7 +107,7 @@
             console.log("success" + response.toString())
           },
           onResponseError({request, response, options}) {
-            console.log("error" + response.toString())
+            console.log("error response" + response.toString())
           }
         })
       },
