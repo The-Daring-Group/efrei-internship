@@ -15,8 +15,4 @@ app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }
 app.use('/api/', apiRouterInternship)
 app.use('/api/', apiRouterEvaluation)
 
-app.listen('3004', () => {
-    console.log(`Now listening on port 3004`)
-})
-
 module.exports = app

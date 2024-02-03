@@ -12,7 +12,7 @@ const http = require('http')
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3004')
+const port = normalizePort(process.env.PORT || '3003')
 app.set('port', port)
 
 /**
@@ -54,6 +54,7 @@ function normalizePort(val) {
  */
 
 function onError(error) {
+  console.log(error)
   if (error.syscall !== 'listen') {
     throw error
   }
