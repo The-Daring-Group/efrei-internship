@@ -83,7 +83,7 @@ export default {
       this.messages = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
     },
     async sendMessage() {
-      await axios.post("http://localhost:3002/api/messages", {
+      const response = await axios.post("http://localhost:3002/api/messages", {
         id_sender: this.sender,
         id_receiver: this.receiver,
         content: this.newMessage,
