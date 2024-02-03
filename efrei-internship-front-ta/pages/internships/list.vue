@@ -7,20 +7,22 @@
             <v-table :data="internships" v-if="!loading">
                 <thead slot="head">
                     <th>Student</th>
+                    <th>Title</th>
                     <th>Company</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Options</th>
                 </thead>
                 <tbody slot="body" slot-scope="{displayData}">
-                    <tr v-for="internship in internships">
-                        <td class="text-center">{{ internship.firstname + ' ' + internship.lastname }}</td>
+                    <tr v-for="internship in this.internships">
+                        <td class="text-center">{{ getStudentName(internship.id_student, this.studentName) }}</td>
+                        <td class="text-center">{{ internship.title }}</td>
                         <td class="text-center">{{ internship.company_name }}</td>
                         <td class="text-center">{{ internship.start_date }}</td>
                         <td class="text-center">{{ internship.end_date }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2 mr-4">
-                              <NuxtLink :to="{ path: '/internships/fill-evaluation/' + internship.id }">Rate Report</NuxtLink>
+                              <NuxtLink :to="{ path: '/internships/rate-report/' + internship.id }">Rate Report</NuxtLink>
                                 <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
                             </div>
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2">
@@ -35,40 +37,46 @@
     </div>
 </template>
 
-<script setup>
-    const loading = ref(false);
-    const internships = [];
-    const academicTutorID = 2; // Need to be changed to the real ID of the academic tutor
+<script>
 
-    onMounted(() => {
-        loadInternships();
-    });
+import { useSessionStore } from '#imports';
+import { getStudentName} from "~/helper/HelpStudent.js";
 
-    const loadInternships = () => {
-        loading.value = true;
+const sessionStore = useSessionStore();
+const id_academic_tutor = sessionStore.getUser.id
 
-        $fetch(`/api/get-internship-academic/${academicTutorID}`, {
-            method: 'GET',
-            baseURL: 'http://localhost:3002',
-        }).then(function (fetchedInternships) {
-            appendInternships(fetchedInternships.internship);
-            loading.value = false;
-        })
-    };
-
-    const appendInternships = (newInternships) => {
-        newInternships.forEach((internship) => {
-            internships.push(internship);
+export default {
+    mounted() {
+        this.getInternships().then(() => {
+            for(let i in this.internships) {
+                this.getInfoStudent(this.internships[i].id_student)
+            }
         });
-    };
-
-    function formatDate(date) {
-        const formattedDate = new Date(date);
-        const year = formattedDate.toLocaleString("default", { year: "numeric" });
-        const month = formattedDate.toLocaleString("default", { month: "2-digit" });
-        const day = formattedDate.toLocaleString("default", { day: "2-digit" });
-
-        return `${year} ${month} ${day}`;
-    }
+    },
+    data() {
+        return {
+            internships: [],
+            studentName: []
+        };
+    },
+    methods: {
+      getStudentName,
+        async getInternships() {
+            const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
+                method: 'get',
+            })
+            this.internships = data.value.internship
+        },
+      async getInfoStudent(id_student) {
+        const {data, pending, error, refresh} = await useFetch("http://localhost:3000/api/getinfos", {
+          method: 'post',
+          body: {
+            id_student: id_student,
+          },
+        })
+        this.studentName.push(data.value)
+      }
+    },
+}
 
 </script>

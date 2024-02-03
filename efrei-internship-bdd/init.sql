@@ -113,6 +113,7 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_company_tutor();
 
 create table if not exists evaluation (
     id serial primary key,
+    type_document varchar(255) not null,
     grade int not null,
     commentary text,
     id_student int not null,
@@ -209,8 +210,9 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_receiver();
 
 --------------------------------------------------------------------------------------------------------------
 
-insert into student (firstname, lastname, email, id_efrei, password) values ('test','user','test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
-insert into academic_tutor (firstname, lastname, email, password) values ('academic','tutor','academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into student (firstname, lastname, firstname, lastname, email, id_efrei, password) values ('test','user','test','user','test.user@efrei.net', 12345678, '$2a$10$fR2ehVpEDTXcxNJnp//v5.sv3SY4BWzGFUDNu2r113/4GWT.HHjz2');
+insert into academic_tutor (firstname, lastname, firstname, lastname, email, password) values ('academic','tutor','academic','tutor','academic.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
+insert into company_tutor (firstname, lastname, email, password) values ('company','tutor','company.tutor@efrei.fr', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
 insert into company_tutor (firstname, lastname, email, password) values ('company', 'employee', 'company.tutor@company.com', '$2a$10$tEKMqrs59ATngTpj7T3jxORvXA21d38G20.Re5vtmmde3IDvTU6ES');
 insert into internship (title, start_date, end_date, description, company_name, id_student, id_academic_tutor, id_company_tutor) values (
     'DevOps Engineer', '2024-03-11', '2024-09-26', 
