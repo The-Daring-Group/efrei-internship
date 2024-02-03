@@ -2,8 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const logger = require('morgan');
 const cors = require('cors');
-require("dotenv").config();
-const { Sequelize } = require('sequelize');
 
 const apiRouterInternship = require('./routes/apiInternship.js')
 const apiRouterEvaluation = require('./routes/apiEvaluation.js')
@@ -17,6 +15,8 @@ app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }
 app.use('/api/', apiRouterInternship)
 app.use('/api/', apiRouterEvaluation)
 
-app.listen('3002', () => {
-    console.log(`Now listening on port 3002`)
+app.listen('3004', () => {
+    console.log(`Now listening on port 3004`)
 })
+
+module.exports = app

@@ -4,15 +4,15 @@
  * Module dependencies.
  */
 
-let app = require('../app')
-let debug = require('debug')('template:server')
-let http = require('http')
+const app = require('../app')
+const debug = require('debug')('template:server')
+const http = require('http')
 
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(process.env.PORT || '3003')
+const port = normalizePort(process.env.PORT || '3004')
 app.set('port', port)
 
 /**
