@@ -39,6 +39,26 @@ router.post("/create-internship", async (req, res) => {
     res.status(200).json({ message: "Internship created" });
 });
 
+router.get("/get-internship/:id_internship", async (req, res) => {
+   const { id_internship } = req.params
+    try {
+        const internship = await sequelize.query(
+        `SELECT * FROM internship WHERE id = :id_internship`,
+            {
+                replacements: {id_internship},
+                type: QueryTypes.SELECT,
+            }
+        );
+        if(internship.length === 0) {
+            res.status(404).json({ message: "No internship found" });
+            return;
+        }
+        res.status(200).json({ internship: internship[0] });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.get("/get-internship-student/:id_student", async (req, res) => {
     const { id_student } = req.params
     try {

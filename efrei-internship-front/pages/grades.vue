@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getEvaluations() {
-      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-evaluation-student/" + id_student, {
+      const {data} = await useFetch("http://localhost:3003/api/get-evaluation-student/" + id_student, {
         method: 'get',
       })
       this.evaluations = data.value.evaluations
@@ -55,7 +55,3 @@ export default {
 };
 
 </script>
-
-<style scoped>
-
-</style>
