@@ -2,7 +2,9 @@ const {router} = require('../initializer/initRouter.js');
 const {sequelize, QueryTypes} = require('../initializer/initSequelize.js');
 
 router.post("/evaluate", async (req, res) => {
+    console.log(req.body) // body undefined ???
     const {id_student, id_academic_tutor, id_company_tutor, type_document, grade, commentary} = req.body
+    
     try {
         await sequelize.query(
             `INSERT INTO evaluation (type_document, grade, commentary, id_student, id_academic_tutor, id_company_tutor) 

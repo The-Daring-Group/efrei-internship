@@ -69,21 +69,21 @@
             internship_id : parseStringRating(this.$route.params.id).id,
             type : parseStringRating(this.$route.params.id).type,
             internship: {
-                "id": 2,
+                "id": 2, // TEMPLATE DATA
                 "title": "",
                 "start_date": "",
                 "end_date": "",
                 "description": "",
                 "company_name": "",
-                "id_student": 1,
-                "id_academic_tutor": 2,
-                "id_company_tutor": 3
+                "id_student": 1, // TEMPLATE DATA
+                "id_academic_tutor": 2, // TEMPLATE DATA
+                "id_company_tutor": 3 // TEMPLATE DATA
             },
             studentName: {
-              name: "Antoine Lachaud",
-              companyName: "Microsoft",
-              startDate: "2024-03-11",
-              endDate: "2024-09-19",
+              name: "Antoine Lachaud", // TEMPLATE DATA
+              companyName: "Microsoft", // TEMPLATE DATA
+              startDate: "2024-03-11", // TEMPLATE DATA
+              endDate: "2024-09-19", // TEMPLATE DATA
             }
         };
     },
