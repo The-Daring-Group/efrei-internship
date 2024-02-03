@@ -42,11 +42,11 @@ const login = async () => {
     <div id="loginForm">
       <div>
         <h2>Connexion</h2>
-        <h3>Utiliser votre Email Efrei</h3>
+        <h3>Service Tuteur Académique</h3>
       </div>
       <p v-if="isError">{{ errorMessage }}</p>
       <form @submit.prevent="login" id="login">
-        <input type="email" v-model="email" required placeholder="Email" />
+        <input type="email" v-model="email" required placeholder="Email EFREI Paris" />
         <input type="password" v-model="password" required placeholder="Mot de passe" />
       </form>
       <button type="submit" @click="login" form="login">Se connecter</button>
