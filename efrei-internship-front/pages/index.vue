@@ -32,6 +32,9 @@ const logout = () => {
           <li class="hover:text-blue-800">
             <NuxtLink to="grades">Grades</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="evaluation/autoEvaluation">Auto Evaluation</NuxtLink>
+          </li>
         </ul>
       </nav>
       <div class="flex flex-row">
