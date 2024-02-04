@@ -19,7 +19,7 @@
                 </li>
             </ul>
             <ul class="flex flex-row">
-                <li class="hover:bg-sky-800 bg-sky-700 text-sky-200 w-fit p-2 mr-2" @click="logout">Disconnect <font-awesome-icon class="ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
+                <li class="hover:bg-sky-800 bg-sky-700 text-sky-200 w-fit p-2 mr-2 hover:cursor-pointer" @click="logout">Disconnect <font-awesome-icon class="ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
             </ul>
         </nav>
     </div>
