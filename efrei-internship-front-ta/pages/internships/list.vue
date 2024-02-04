@@ -21,11 +21,11 @@
                         <td class="text-center">{{ internship.end_date }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2 mr-4">
-                              <NuxtLink :to="{ path: '/internships/rate-report/' + internship.id }">Rate Report</NuxtLink>
+                              <NuxtLink :to="{ path: '/internships/rating/type=report&id=' + internship.id}">Rate Report</NuxtLink>
                                 <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
                             </div>
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2">
-                                <NuxtLink :to="{ path: '/internships/rate-presentation/' + internship.id }">Rate Presentation</NuxtLink>
+                                <NuxtLink :to="{ path: '/internships/rating/type=soutenance&id=' + internship.id}">Rate Presentation</NuxtLink>
                                 <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
                             </div>
                         </td>
@@ -39,7 +39,7 @@
 <script>
 
 import { useSessionStore } from '#imports';
-import { getStudentName} from "~/helper/HelpStudent.js";
+import { getStudentName } from "~/helper/HelpStudent.js";
 
 const sessionStore = useSessionStore();
 const id_academic_tutor = sessionStore.getUser.id
@@ -60,14 +60,14 @@ export default {
     },
     methods: {
       getStudentName,
-        async getInternships() {
-            const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
+      async getInternships() {
+            const {data} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
                 method: 'get',
             })
             this.internships = data.value.internship
         },
       async getInfoStudent(id_student) {
-        const {data, pending, error, refresh} = await useFetch("http://localhost:3000/api/getinfos", {
+        const {data} = await useFetch("http://localhost:3000/api/getinfos", {
           method: 'post',
           body: {
             id_student: id_student,

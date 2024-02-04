@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     async submitData() {
-      const {data, pending, error, refresh} = await useFetch("http://localhost:3003/api/create-internship", {
+      await useFetch("http://localhost:3003/api/create-internship", {
         method: 'post',
         body: {
           id_student: id_student,
@@ -86,7 +86,7 @@ export default {
           await navigateTo('/internship/Internships')
         },
         onResponseError({ request, response, options }) {
-          console.log("error" + response)
+          console.log("error" + response.toString())
         }
       })
     },
