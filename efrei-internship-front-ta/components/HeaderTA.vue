@@ -3,7 +3,13 @@
         <div class="tw-text-xl tw-mb-1 tw-m-2">/// Efrei Internship | Academic Tutor Section</div>
         <nav class="tw-flex tw-flex-row tw-items-center tw-justify-between">
             <ul class="tw-flex tw-flex-row">
-                <li class="hover:tw-bg-cyan-800 tw-bg-cyan-600 tw-w-fit tw-py-2 tw-px-2.5 tw-mx-2"><NuxtLink to="/"><font-awesome-icon class="" :icon="['fas', 'house']" /></NuxtLink></li>
+                <li class="hover:tw-bg-cyan-800 tw-bg-cyan-600 tw-w-fit tw-py-2 tw-px-2.5 tw-mx-2">
+                    <NuxtLink to="/">
+                        <span>
+                            <font-awesome-icon icon="fa-house" />
+                        </span>
+                    </NuxtLink>
+                </li>
                 <li class="hover:tw-bg-cyan-800 tw-bg-cyan-600 tw-w-fit tw-p-2"><NuxtLink to="/internships/list">Internships</NuxtLink></li>
             </ul>
             <ul class="tw-flex tw-flex-row">
