@@ -10,6 +10,7 @@ const app = express()
 
 app.use(cors({ origin: ['http://localhost:8001', "http://localhost:8000"] }))
 app.use(logger('dev'))
+app.use(express.json())
 app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }))
 
 app.use('/api/', apiRouterInternship)
