@@ -3,8 +3,7 @@
     <div class="tw-m-5">
         <div class="tw-text-2xl tw-text-center tw-mb-5">Internship list page</div>
         <div>
-            <div v-if="loading">Loading...</div>
-            <v-table :data="internships" v-if="!loading">
+            <v-table :data="internships">
                 <thead slot="head">
                     <th>Student</th>
                     <th>Title</th>
