@@ -11,6 +11,7 @@
                     </NuxtLink>
                 </li>
                 <li class="hover:tw-bg-cyan-800 tw-bg-cyan-600 tw-w-fit tw-p-2"><NuxtLink to="/internships/list">Internships</NuxtLink></li>
+                <li class="tw-mx-2 hover:tw-bg-cyan-800 tw-bg-cyan-600 tw-w-fit tw-p-2"><NuxtLink to="/files/file">Documents</NuxtLink></li>
             </ul>
             <ul class="tw-flex tw-flex-row">
                 <li class="hover:tw-bg-sky-800 tw-bg-sky-700 tw-text-sky-200 tw-w-fit tw-p-2 tw-mr-2 hover:tw-cursor-pointer" @click="logout">Disconnect <font-awesome-icon class="tw-ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>

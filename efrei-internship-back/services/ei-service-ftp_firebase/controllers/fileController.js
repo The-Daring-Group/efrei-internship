@@ -12,16 +12,36 @@ const uploadFile = async (req, res) => {
 };
 
 
-const getFiles = async (req, res) => {
+const getStudentFiles = async (req, res) => {
   try {
-    const documents = await fileService.getFiles(req);
+    const documents = await fileService.getStudentFiles(req);
     res.json(documents);
   } catch (error) {
     console.error(error);
   }
 };
 
+const getAcademicTutorFiles = async (req, res) => {
+  try {
+    const documents = await fileService.getAcademicTutorFiles(req);
+    res.json(documents);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const AcademicValidateFile = async (req, res) => {
+  try {
+    const documents = await fileService.AcademicValidateFile(req);
+    res.json(documents);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 module.exports = {
   uploadFile,
-  getFiles,
+  getStudentFiles,
+  getAcademicTutorFiles,
+  AcademicValidateFile,
 };

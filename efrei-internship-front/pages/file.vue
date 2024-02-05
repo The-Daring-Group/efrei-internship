@@ -1,12 +1,12 @@
 <template xmlns="http://www.w3.org/1999/html">
-
+  <HeaderETU/>
   <div>
     <div class="container">
       <div class="text-center pr-10 font-extrabold text-2xl">
         Upload your files here
       </div>
           <h1>File Upload</h1>
-          <form>
+          <form @submit.prevent="submitform">
               <div class="input-group">
                   <label for="name">Name of the document</label>
                   <input v-model="name" id="name" placeholder="Enter the file name" />
@@ -20,7 +20,7 @@
                   <label for="files">Select files</label>
                   <input id="files" type="file" multiple v-on:change="handleFileChange" />
               </div>
-              <button class="submit-btn" type="submit" @click="submitform">Upload</button>
+              <button class="submit-btn" type="submit">Upload</button>
           </form>
       </div>
     <div>
@@ -39,7 +39,7 @@
             </tr>
           </thead>
           <tbody class="justify-center">
-            <tr v-for="element in this.filesSend" :key="element.id">
+            <tr v-for="element in filesSend" :key="element.id">
               <td>{{ element.name }}</td>
               <td>{{ element.type }}</td>
               <td>{{ element.validated_by_company }}</td>
@@ -74,7 +74,7 @@ export default {
       const formData = new FormData();
       formData.append('name', this.name);
       formData.append('type', this.type);
-      formData.append('id_student', id_student);
+      formData.append('id_student', id_student.toString());
       // Assuming you only want to upload the first file if multiple files are selected
       if (this.files && this.files.length > 0) {
         formData.append('file', this.files[0]);
@@ -83,14 +83,14 @@ export default {
         method: 'POST',
         body: formData,
       })
-          .then((res) => console.log(res))
-          .catch((err) => console.error('Error occurred', err));
+      .then(response => console.log(response))
+      .catch(error => console.error('Error:', error))
     },
     handleFileChange(e) {
       this.files = e.target.files;
     },
     async getFilesStudent() {
-      const {data} = await useFetch("http://localhost:3030/get_files", {
+      const {data} = await useFetch("http://localhost:3030/get_student_files", {
         method: 'POST',
         body: {
           id_student: id_student
