@@ -17,4 +17,8 @@ app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }
 app.use('/api/', apiRouterInternship)
 app.use('/api/', apiRouterEvaluation)
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the internship info API')
+})
+
 module.exports = app

@@ -67,7 +67,10 @@ export default {
             const {data} = await useFetch("http://localhost:3003/api/get-internship-academic/" + this.id_academic_tutor, {
                 method: 'get',
             })
-            this.internships = data.value.internship
+            //console.log(data.value)
+            if (data.value) {
+                this.internships = data.value.internship
+            }
         } catch (error) {
             console.log(error)
         }
