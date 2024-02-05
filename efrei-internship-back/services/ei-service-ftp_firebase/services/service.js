@@ -86,16 +86,16 @@ async function SaveDocURL(url, id_student, type, name) {
     
 }
 
-async function getFiles(req) {
+async function getFiles(req, res) {
     try {
         const documents = await sequelize.query(
             `SELECT * FROM document WHERE id_student = :id_student`,
             {
-                replacements: {id_student: req.params.id_student},
+                replacements: {id_student: req.body.id_student},
                 type: QueryTypes.SELECT,
             });
 
-        res.json(documents);
+        return documents;
     } catch (error) {
         console.error(error);
     }
