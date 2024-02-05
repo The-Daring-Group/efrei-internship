@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { useSessionStore } from '#imports';
-const sessionStore = useSessionStore();
+// const sessionStore = useSessionStore();
 
-const userInfos = ref(sessionStore.getUser)
+// const userInfos = ref(sessionStore.getUser)
 
-const logout = () => {
-  useFetch('http://localhost:3000/api/logout', {
-    method: 'POST',
-  }).then(() => {
-    sessionStore.logout()
-    navigateTo('/login')
-  })
-}
+// const logout = () => {
+//   useFetch('http://localhost:3000/api/logout', {
+//     method: 'POST',
+//   }).then(() => {
+//     sessionStore.logout()
+//     navigateTo('/login')
+//   })
+// }
 
 </script>
 
 <template>
-  <div class="m-5">
+  <HeaderETU />
+  <div class="text-center mt-2">This is the index page of the student Front-End</div>
+  <!-- <div class="m-5">
     <header class="flex flex-row justify-between">
       <nav>
         <ul class="text-blue-600">
@@ -32,6 +34,12 @@ const logout = () => {
           <li class="hover:text-blue-800">
             <NuxtLink to="grades">Grades</NuxtLink>
           </li>
+          <li class="hover:text-blue-800">
+            <NuxtLink to="evaluation/autoEvaluation">Auto Evaluation</NuxtLink>
+          </li>
+          <li class="hover:text-blue-800">
+            <NuxtLink to="file">Documents</NuxtLink>
+          </li>
         </ul>
       </nav>
       <div class="flex flex-row">
@@ -44,5 +52,5 @@ const logout = () => {
     </header>
     <div class="text-2xl text-center">Home Page - Child component below</div>
     <ButtonCounter />
-  </div>
+  </div> -->
 </template>
