@@ -11,17 +11,23 @@
                 <thead slot="head">
                     <th>Name</th>
                     <th>Type</th>
-                    <th>URL</th>
+                    <th>Link</th>
                     <th>Validated  By the company</th>
                     <th>Validated By the school</th>
+                    <th>Validate</th>
                 </thead>
                 <tbody slot="body" slot-scope="{displayData}">
                     <tr v-for="document in this.filesSend">
                         <td class="text-center">{{document.name}}</td>
                         <td class="text-center">{{ document.type }}</td>
-                        <td class="text-center">{{ document.url }}</td>
+                        <td class="text-center">
+                            <button @click="openLink(document.url)">Open Link</button>
+                        </td>
                         <td class="text-center">{{ document.validated_by_company }}</td>
                         <td class="text-center">{{ document.validated_by_school }}</td>
+                        <td class="text-center">
+                            <button @click="validateDocument(document)">Validate</button>
+                        </td>
                     </tr>
                 </tbody>
             </v-table>
@@ -54,6 +60,26 @@ export default {
       }).then((response) => {
         this.filesSend = response.data;
       });
+    },
+
+    async validateDocument(document) {
+      // Retrieve the document information and call the validateDocument method
+      const { id_student, name, type, url } = document;
+      await this.validateDocumentRequest(id_student, name, type, url);
+
+    },
+
+    async validateDocumentRequest(id, name, type, url) {
+      await useFetch('http://localhost:3030/academic_validate_file', {
+        method: 'POST',
+        body: {
+          id_student,
+          type,
+          url,
+          name,
+        },
+      }).then((res) => console.log(res))
+        .catch((err) => console.error('Error occurred', err));
     },
   },
 }

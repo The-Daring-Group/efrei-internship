@@ -12,6 +12,6 @@ module.exports = function(app) {
     app.post("/upload_files", upload.single("file"), fileController.uploadFile);
     app.post("/get_student_files", fileController.getStudentFiles);
     app.post("/get_academic_tutor_files", fileController.getAcademicTutorFiles);
-    app.post("/validate_file", fileController.AcademicValidateFile);
+    app.post("/academic_validate_file", fileController.AcademicValidateFile);
 };
 
