@@ -1,23 +1,55 @@
 <template xmlns="http://www.w3.org/1999/html">
 
-  <div class="container">
-        <h1>File Upload</h1>
-        <form>
-            <div class="input-group">
-                <label for="name">Name of the document</label>
-                <input v-model="name" id="name" placeholder="Enter the file name" />
-                <input v-model="type" list="type" placeholder="Select the type of your document">
-                <datalist id="type">
-                    <option value="Specifications"></option>
-                    <option value="Report"></option>
-                </datalist>
-            </div>
-            <div class="input-group">
-                <label for="files">Select files</label>
-                <input id="files" type="file" multiple v-on:change="handleFileChange" />
-            </div>
-            <button class="submit-btn" type="submit" @click="submitform">Upload</button>
-        </form>
+  <div>
+    <div class="container">
+      <div class="text-center pr-10 font-extrabold text-2xl">
+        Upload your files here
+      </div>
+          <h1>File Upload</h1>
+          <form>
+              <div class="input-group">
+                  <label for="name">Name of the document</label>
+                  <input v-model="name" id="name" placeholder="Enter the file name" />
+                  <input v-model="type" list="type" placeholder="Select the type of your document">
+                  <datalist id="type">
+                      <option value="Specifications"></option>
+                      <option value="Report"></option>
+                  </datalist>
+              </div>
+              <div class="input-group">
+                  <label for="files">Select files</label>
+                  <input id="files" type="file" multiple v-on:change="handleFileChange" />
+              </div>
+              <button class="submit-btn" type="submit" @click="submitform">Upload</button>
+          </form>
+      </div>
+    <div>
+      <div class="text-center pr-10 font-extrabold text-2xl">
+        Your files uploaded :
+      </div>
+      <div>
+        <table id="test" class="bg-slate-200	mx-8 border-emerald-400">
+          <thead>
+            <tr>
+              <th>Name of the file</th>
+              <th>Type</th>
+              <th>Validated by the company</th>
+              <th>Validated by the school</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody class="justify-center">
+            <tr v-for="element in this.filesSend" :key="element.id">
+              <td>{{ element.name }}</td>
+              <td>{{ element.type }}</td>
+              <td>{{ element.validated_by_company }}</td>
+              <td>{{ element.validated_by_school }}</td>
+              <td><a class="hover:text-blue-800" :href="element.url" target="_blank">{{ element.url }}</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     </div>
 </template>
 
@@ -26,12 +58,15 @@ import { useSessionStore } from '#imports';
 const sessionStore = useSessionStore();
 const id_student = sessionStore.getUser.id
 export default {
-
+  mounted() {
+    this.getFilesStudent();
+  },
   data() {
     return {
       name: '',
       type: '',
       files: null,
+      filesSend: [],
     };
   },
   methods: {
@@ -44,7 +79,6 @@ export default {
       if (this.files && this.files.length > 0) {
         formData.append('file', this.files[0]);
       }
-      console.log(formData.get('file'));
       fetch('http://localhost:3030/upload_files', {
         method: 'POST',
         body: formData,
@@ -54,6 +88,15 @@ export default {
     },
     handleFileChange(e) {
       this.files = e.target.files;
+    },
+    async getFilesStudent() {
+      const {data} = await useFetch("http://localhost:3030/get_files", {
+        method: 'POST',
+        body: {
+          id_student: id_student
+        },
+      })
+      this.filesSend = data.value
     }
   }
 }
