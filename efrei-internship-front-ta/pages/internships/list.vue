@@ -20,6 +20,7 @@
                         <td class="text-center">{{ internship.start_date }}</td>
                         <td class="text-center">{{ internship.end_date }}</td>
                         <td class="tw-flex tw-items-center tw-justify-center">
+                            <ChatButton :userId="internship.id" :sender="id_academic_tutor" :internshipsId="getInternshipsId()" />
                             <div class="tw-bg-cyan-400 hover:tw-bg-cyan-600 hover:tw-text-white hover:tw-cursor-pointer tw-p-1.5 tw-w-fit tw-rounded-md tw-text-cyan-800 tw-border-cyan-600 tw-border-2 mr-4">
                               <NuxtLink :to="{ path: '/internships/rating/type=report&id=' + internship.id}">Rate Report</NuxtLink>
                                 <font-awesome-icon class="tw-ml-1" :icon="['fas', 'pen-to-square']" />
@@ -41,11 +42,11 @@
 import { useSessionStore } from '#imports';
 import { getStudentName } from "~/helper/HelpStudent.js";
 
-const sessionStore = useSessionStore();
-const id_academic_tutor = sessionStore.getUser.id
-
 export default {
     mounted() {
+        const sessionStore = useSessionStore();
+        this.id_academic_tutor = sessionStore.getUser.id
+
         this.getInternships().then(() => {
             for(let i in this.internships) {
                 this.getInfoStudent(this.internships[i].id_student)
@@ -55,16 +56,24 @@ export default {
     data() {
         return {
             internships: [],
-            studentName: []
+            studentName: [],
+            id_academic_tutor: null
         };
     },
     methods: {
       getStudentName,
       async getInternships() {
-            const {data} = await useFetch("http://localhost:3003/api/get-internship-academic/" + id_academic_tutor, {
+        try {
+            const {data} = await useFetch("http://localhost:3003/api/get-internship-academic/" + this.id_academic_tutor, {
                 method: 'get',
             })
-            this.internships = data.value.internship
+            //console.log(data.value)
+            if (data.value) {
+                this.internships = data.value.internship
+            }
+        } catch (error) {
+            console.log(error)
+        }
         },
       async getInfoStudent(id_student) {
         const {data} = await useFetch("http://localhost:3000/api/getinfos", {
