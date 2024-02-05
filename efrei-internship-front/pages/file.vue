@@ -1,11 +1,16 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
 
   <div class="container">
         <h1>File Upload</h1>
-        <form @submit.prevent="submitForm">
+        <form>
             <div class="input-group">
-                <label for="name">Your name</label>
-                <input v-model="name" id="name" placeholder="Enter your name" />
+                <label for="name">Name of the document</label>
+                <input v-model="name" id="name" placeholder="Enter the file name" />
+                <input v-model="type" list="type" placeholder="Select the type of your document">
+                <datalist id="type">
+                    <option value="Specifications"></option>
+                    <option value="Report"></option>
+                </datalist>
             </div>
             <div class="input-group">
                 <label for="files">Select files</label>
@@ -17,7 +22,9 @@
 </template>
 
 <script>
-
+import { useSessionStore } from '#imports';
+const sessionStore = useSessionStore();
+const id_student = sessionStore.getUser.id
 export default {
 
   data() {
@@ -31,8 +38,8 @@ export default {
     submitform() {
       const formData = new FormData();
       formData.append('name', this.name);
-      formData.append('type', "chill");
-      formData.append('id_student', "1");
+      formData.append('type', this.type);
+      formData.append('id_student', id_student);
       // Assuming you only want to upload the first file if multiple files are selected
       if (this.files && this.files.length > 0) {
         formData.append('file', this.files[0]);
