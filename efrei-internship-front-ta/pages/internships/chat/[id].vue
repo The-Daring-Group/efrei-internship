@@ -21,14 +21,10 @@
 
     <!-- Liste des messages -->
     <ul class="messages-list">
-      <li
-        v-for="message in messages"
-        :key="message.id"
-        :class="{
-          sent: message.id_sender === sender,
-          received: message.id_receiver === sender,
-        }"
-      >
+      <li v-for="message in messages" :key="message.id" :class="{
+        sent: message.id_sender === sender,
+        received: message.id_receiver === sender,
+      }">
         <span v-if="message.id_sender === sender && !message.is_read" class="unread-icon">🔴</span>
         {{ message.content }}
       </li>
@@ -36,11 +32,7 @@
 
     <!-- Interface d'envoi de messages -->
     <form @submit.prevent="sendMessage" class="message-input">
-      <input
-        type="text"
-        v-model="newMessage"
-        placeholder="Type your message here..."
-      />
+      <input type="text" v-model="newMessage" placeholder="Type your message here..." />
       <button type="submit">Send</button>
     </form>
   </div>

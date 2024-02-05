@@ -1,5 +1,40 @@
-<script setup>
-import axios from 'axios'
+<script setup lang="ts">
+import { useSessionStore, type UserType } from '#imports';
+
+const sessionStore = useSessionStore();
+
+const efreiId = ref('')
+const password = ref('')
+
+const isError = ref(false)
+const errorMessage = ref('')
+
+const login = async () => {
+  try {
+    const response = await useFetch<UserType>('http://localhost:3000/api/login', {
+      method: 'POST',
+      body: {
+        efreiId: efreiId.value,
+        password: password.value,
+      },
+    })
+
+    if (response.status.value === "success" && response.data.value !== null) {
+      sessionStore.login(response.data.value)
+      navigateTo('/')
+    } else {
+      isError.value = true
+      if (response.error.value !== null && response.error.value.statusCode !== 500) {
+        errorMessage.value = response.error.value.data.error
+      } else {
+        errorMessage.value = "Back server is down"
+      }
+    }
+  } catch (error) {
+    isError.value = true
+    errorMessage.value = (error as Error).message;
+  }
+}
 </script>
 
 <template>
@@ -10,48 +45,14 @@ import axios from 'axios'
         <h3>Utiliser votre compte Efrei</h3>
       </div>
       <p v-if="isError">{{ errorMessage }}</p>
-      <form>
-        <input type="number" v-model="efreiId" required placeholder="Numéro Efrei"/>
-        <input type="password" v-model="password" required placeholder="Mot de passe"/>
+      <form @submit.prevent="login" id="login">
+        <input type="text" maxlength="8" pattern="[0-9]{8}" v-model="efreiId" required placeholder="Numéro Efrei" />
+        <input type="password" v-model="password" required placeholder="Mot de passe" />
       </form>
-      <button type="submit" @click="login">Se connecter</button>
+      <button type="submit" form="login">Se connecter</button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      efreiId: '',
-      password: '',
-      isError: false,
-      errorMessage: '',
-    }
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await axios.post('http://localhost:3000/api/login', {
-          efreiId: this.efreiId,
-          password: this.password,
-        })
-
-        if (response.status === 200) {
-          // TODO: store token and user in vuex
-          // this.$store.commit('setToken', response.data.token)
-          // this.$store.commit('setUser', response.data.email)
-          console.log(response.data.email)
-          this.$router.push('/')
-        }
-      } catch (error) {
-        this.isError = true
-        this.errorMessage = error
-      }
-    },
-  },
-}
-</script>
 
 <style scoped>
 #background {
