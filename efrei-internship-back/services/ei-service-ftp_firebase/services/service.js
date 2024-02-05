@@ -38,38 +38,69 @@ async function uploadFile(req) {
 
 async function SaveDocURL(url, id_student, type, name) {
     try {
-        const id_academic_tutor = await sequelize.query(
-            `SELECT id_academic_tutor FROM internship WHERE id_student = :id_student`,
+        const document = await sequelize.query(
+            `SELECT id FROM document WHERE id_student = :id_student AND type = :type`,
             {
-                replacements: {id_student},
+                replacements: {id_student, type},
                 type: QueryTypes.SELECT,
             });
 
-        const id_company_tutor = await sequelize.query(
-            `SELECT id_company_tutor FROM internship WHERE id_student = :id_student`,
-            {
-                replacements: {id_student},
-                type: QueryTypes.SELECT,
-            });
+        if (document.length > 0) {
+            await sequelize.query(
+                `UPDATE document SET url = :url, name = :name WHERE id_student = :id_student AND type = :type`,
+                {
+                    replacements: {url, name, id_student, type},
+                    type: QueryTypes.UPDATE,
+                });
+            return;
+        }
+        
+        else {
+
+            const id_academic_tutor = await sequelize.query(
+                `SELECT id_academic_tutor FROM internship WHERE id_student = :id_student`,
+                {
+                    replacements: {id_student},
+                    type: QueryTypes.SELECT,
+                });
+
+            const id_company_tutor = await sequelize.query(
+                `SELECT id_company_tutor FROM internship WHERE id_student = :id_student`,
+                {
+                    replacements: {id_student},
+                    type: QueryTypes.SELECT,
+                });
 
 
-        await sequelize.query(
-            `INSERT INTO document (url, validated_by_company, validated_by_school, id_student, id_academic_tutor, id_company_tutor, type, name) VALUES (?, FALSE, FALSE, ?, ?, ?, ?, ?)`,
-            {
-                replacements: [url, id_student, id_academic_tutor, id_company_tutor, type, name],
-                type: QueryTypes.INSERT,
-            }
-        );
+            await sequelize.query(
+                `INSERT INTO document (url, validated_by_company, validated_by_school, id_student, id_academic_tutor, id_company_tutor, type, name) VALUES (?, FALSE, FALSE, ?, ?, ?, ?, ?)`,
+                {
+                    replacements: [url, id_student, id_academic_tutor, id_company_tutor, type, name],
+                    type: QueryTypes.INSERT,
+                }
+            );
+        }
     } catch (error) {
         console.error(error);
     }
     
 }
 
-async function GetFileURL(req) {
-    
-    return downloadURL;
+async function getFiles(req, res) {
+    try {
+        const documents = await sequelize.query(
+            `SELECT * FROM document WHERE id_student = :id_student`,
+            {
+                replacements: {id_student: req.params.id_student},
+                type: QueryTypes.SELECT,
+            });
+
+        res.json(documents);
+    } catch (error) {
+        console.error(error);
+    }
 }
+
 
 
 module.exports = {
