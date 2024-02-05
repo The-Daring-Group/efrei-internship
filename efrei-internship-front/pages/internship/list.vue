@@ -1,5 +1,6 @@
 <!-- pages/internship.vue -->
 <template>
+  <HeaderETU />
   <div class="m-5">
     <div class="text-2xl text-center">Welcome to Internship Page</div>
       <div class="flex justify-center">

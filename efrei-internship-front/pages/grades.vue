@@ -1,12 +1,9 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
+  <HeaderETU />
     <div>
         <div>
-          <div class="text-center pr-10 font-extrabold text-2xl">
-            You can see your Grades :
+          <div class="text-center pr-10 font-extrabold text-2xl my-4">
+            Your Grades
           </div>
 
           <div>
