@@ -7,6 +7,7 @@ cd "$(dirname "$0")"
 echo "Starting services of the backend..."
 npm start --prefix ./efrei-internship-back/services/ei-service-auth &
 npm start --prefix ./efrei-internship-back/services/ei-service-chat &
+npm start --prefix ./efrei-internship-back/services/ei-service-ftp_firebase &
 npm start --prefix ./efrei-internship-back/services/ei-service-internship-info &
 
 # Start the database
