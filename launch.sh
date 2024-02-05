@@ -25,6 +25,8 @@ npm start --prefix ./efrei-internship-back/services/ei-service-auth &
 PID_ei_service_auth=$!
 npm start --prefix ./efrei-internship-back/services/ei-service-chat &
 PID_ei_service_chat=$!
+npm start --prefix ./efrei-internship-back/services/ei-service-ftp_firebase &
+PID_ei_service_firebase=$!
 npm start --prefix ./efrei-internship-back/services/ei-service-internship-info &
 PID_ei_service_internship_info=$!
 

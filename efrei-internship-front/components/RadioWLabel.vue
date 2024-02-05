@@ -32,8 +32,21 @@ export default {
       type: Array,
       required: true,
     },
+    answered: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
+    showAnswerOnly() {
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach((input) => {
+        if (input.type === 'radio') {
+          input.disabled = true;
+        }
+      });
+    },
     updateVModel(value) {
       this.$emit('update:vmodel', value);
     },

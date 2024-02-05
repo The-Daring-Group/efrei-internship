@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #test {
   border-collapse: collapse;
   width: 95%;

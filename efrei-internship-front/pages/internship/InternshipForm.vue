@@ -3,11 +3,11 @@
     <div class="text-2xl text-center pt-2">Internship Form</div>
     <div>
       <label for="title">Title</label>
-      <input id="title" v-model="internshipData.title" placeholder="Title"/>
+      <input id="title" v-model="internshipData.title" placeholder="Title" />
     </div>
     <div>
       <label for="company">Company</label>
-      <input id="company" v-model="internshipData.company" placeholder="Company"/>
+      <input id="company" v-model="internshipData.company" placeholder="Company" />
     </div>
     <div>
       <label for="description">Description</label>
@@ -19,8 +19,8 @@
         <label id="tutorC" for="tutor">Tutor Company Email</label>
       </div>
       <div id="tutorsInput">
-        <input id="tutor" type="email" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email"/>
-        <input id="tutor" type="email" v-model="internshipData.tutorCompany" placeholder="Tutor Company Email"/>
+        <input id="tutor" type="email" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email" />
+        <input id="tutor" type="email" v-model="internshipData.tutorCompany" placeholder="Tutor Company Email" />
       </div>
     </div>
     <div>
@@ -31,7 +31,8 @@
       <label for="endDate">End Date</label>
       <input ref="endDate" v-model="internshipData.endDate" placeholder="Select End Date" />
     </div>
-    <button class="bg-blue-500 text-white rounded-sm hover:cursor-pointer hover:bg-green-500 p-2 float-right mr-4" @click="submitData">Submit</button>
+    <button class="bg-blue-500 text-white rounded-sm hover:cursor-pointer hover:bg-green-500 p-2 float-right mr-4"
+      @click="submitData">Submit</button>
   </div>
 </template>
 
@@ -82,7 +83,7 @@ export default {
         onRequestError({ request, options, error }) {
           console.log("error" + error)
         },
-        async onResponse({request, response, options}) {
+        async onResponse({ request, response, options }) {
           await navigateTo('/internship/Internships')
         },
         onResponseError({ request, response, options }) {
@@ -94,47 +95,49 @@ export default {
 };
 </script>
 
-<style>
-  div {
-    margin-bottom: 15px;
-  }
+<style scoped>
+div {
+  margin-bottom: 15px;
+}
 
-  h1 {
-    color: #333;
-    text-align: center;
-  }
+h1 {
+  color: #333;
+  text-align: center;
+}
 
-  label {
-    margin-left: 2%;
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-  }
+label {
+  margin-left: 2%;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
 
-  input,
-  textarea {
-    width: calc(100% - 4%);
-    padding: 8px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 2%;
-    margin-right: 2%;
-  }
+input,
+textarea {
+  width: calc(100% - 4%);
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
 
-  button:hover {
-    transform: scale(1.2);
-  }
-  #tutors {
-    display: flex;
-  }
-  #tutorsInput {
-    display: flex;
-  }
-  #tutorC {
-    position: absolute;
-    left: 54.5%;
-    transform: translateX(-50%);
-  }
-</style>
+button:hover {
+  transform: scale(1.2);
+}
+
+#tutors {
+  display: flex;
+}
+
+#tutorsInput {
+  display: flex;
+}
+
+#tutorC {
+  position: absolute;
+  left: 54.5%;
+  transform: translateX(-50%);
+}</style>
