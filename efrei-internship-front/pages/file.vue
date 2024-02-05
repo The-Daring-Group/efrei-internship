@@ -90,7 +90,7 @@ export default {
       this.files = e.target.files;
     },
     async getFilesStudent() {
-      const {data} = await useFetch("http://localhost:3030/get_files", {
+      const {data} = await useFetch("http://localhost:3030/get_student_files", {
         method: 'POST',
         body: {
           id_student: id_student
