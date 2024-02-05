@@ -10,6 +10,6 @@ const upload = multer({ storage: storage })
 
 module.exports = function(app) {
     app.post("/upload_files", upload.single("file"), fileController.uploadFile);
-    app.get("/get_files", fileController.getFiles);
+    app.post("/get_files", fileController.getFiles);
 };
 
