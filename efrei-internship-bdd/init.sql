@@ -96,6 +96,19 @@ create table if not exists internship (
     id_company_tutor int not null
 );
 
+-- Trigger function to enforce foreign key constraint for id_internship
+CREATE OR REPLACE FUNCTION enforce_fk_internship() RETURNS TRIGGER AS $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM internship
+        WHERE id = NEW.id_internship
+    ) THEN
+        RAISE EXCEPTION 'Foreign key constraint violation on id_internship';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- Trigger for id_student
 CREATE TRIGGER trigger_fk_student_on_internship
 BEFORE INSERT OR UPDATE ON internship
@@ -140,13 +153,17 @@ create table if not exists document (
     id serial primary key,
     name varchar(255) not null,
     type varchar(255) not null,
-    url varchar(255) not null,
-    validated_by_company boolean not null,
     validated_by_school boolean not null,
+    id_internship int not null,
     id_student int not null,
     id_academic_tutor int not null,
     id_company_tutor int not null
 );
+
+-- Trigger for id_internship
+CREATE TRIGGER trigger_fk_internship_on_document
+BEFORE INSERT OR UPDATE ON document
+FOR EACH ROW EXECUTE FUNCTION enforce_fk_internship();
 
 -- Trigger for id_student
 CREATE TRIGGER trigger_fk_student_on_document
@@ -162,6 +179,35 @@ FOR EACH ROW EXECUTE FUNCTION enforce_fk_academic_tutor();
 CREATE TRIGGER trigger_fk_company_tutor_on_document
 BEFORE INSERT OR UPDATE ON document
 FOR EACH ROW EXECUTE FUNCTION enforce_fk_company_tutor();
+
+create table if not exists digital_document (
+    url varchar(255) not null,
+    validated_by_company boolean not null,
+    confidential boolean not null
+) inherits (document);
+
+create table if not exists auto_evaluation (
+    input1 varchar(255) not null,
+    input2 varchar(255) not null,
+    input3 varchar(255) not null,
+    input4 varchar(255) not null,
+    input5 varchar(255) not null,
+    input6 varchar(255),
+    radio1 int not null,
+    radio1_example varchar(255) not null,
+    radio2 int not null,
+    radio2_example varchar(255) not null,
+    radio3 int not null,
+    radio3_example varchar(255) not null,
+    radio4 int not null,
+    radio4_example varchar(255) not null,
+    radio5 int not null,
+    radio5_example varchar(255) not null,
+    radio6 int not null,
+    radio6_example varchar(255) not null,
+    contact_tutor boolean not null,
+    contact_way varchar(255)
+) inherits (document);
 
 create table if not exists chat (
     id serial primary key,
