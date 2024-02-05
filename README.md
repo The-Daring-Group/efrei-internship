@@ -5,27 +5,15 @@ This is the main readme file for the Advanced Programming Project. There are 3 d
 - efrei-internship-bdd
 - efrei-internship-front
 
+*\*Note: You need to have docker open for next actions.*
+
 ## Launching all the project
 
 To launch all the project, you can use the following command
 ```bash
 ./launch.sh
 ```
-*\*Note: You need to have docker open*
-
-## Back-end
-
-1. Install dependencies
-```bash
-# npm
-npm i
-```
-
-2. Start the development server on `http://localhost:8080`
-```bash
-# npm
-npm run dev
-```
+Add `--build` to rebuild the images.
 
 ## Database
 
@@ -44,16 +32,22 @@ If there is changes in init.sql, you can use the following command
 docker-compose up -d --build
 ```
 
-## Front-end
+## Back-end
 
-1. Install dependencies
+For each service (auth, chat and internship-info), you can use the following command to install the dependencies and start the development server on `http://localhost:8080`.
+
 ```bash
 # npm
-npm install 
+npm start 
 ```
 
-2. Start the development server on `http://localhost:3000`
+*It's also possible to test the services in fast reload mode with `npm run dev`.*
+
+## Front-end
+
+For both frontends (student and academic tutor), you can use the following command to install the dependencies and start the development server on `http://localhost:3000`.
+
 ```bash
 # npm
-npm run dev
+npm start 
 ```

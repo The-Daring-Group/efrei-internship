@@ -58,10 +58,14 @@ export default {
   },
   methods: {
     async getInternships() {
-      const { data } = await useFetch("http://localhost:3003/api/get-internship-student/" + id_student, {
-        method: 'get',
-      })
-      this.internships = data.value.internship
+      try {
+        const { data, pending, error, refresh } = await useFetch("http://localhost:3003/api/get-internship-student/" + id_student, {
+          method: 'get',
+        })
+        this.internships = data.value.internship
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
