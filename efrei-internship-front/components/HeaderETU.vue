@@ -11,6 +11,7 @@
                     </NuxtLink>
                 </li>
                 <li class="hover:bg-cyan-800 bg-cyan-600 w-fit p-2"><NuxtLink to="/internship/list">Internships</NuxtLink></li>
+                <li class="mx-2 hover:bg-cyan-800 bg-cyan-600 w-fit p-2"><NuxtLink to="/file">Documents</NuxtLink></li>
                 <li class="hover:bg-cyan-800 bg-cyan-600 w-fit mx-2 p-2">
                     <NuxtLink to="/grades">Grades</NuxtLink>
                 </li>
