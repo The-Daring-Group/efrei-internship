@@ -62,7 +62,7 @@ async function SaveDocURL(url, id_student, type, name) {
 
         if (document.length > 0 && validated_by_company[0].validated_by_company === false && validated_by_school[0].validated_by_school === false) {
             await sequelize.query(
-                `UPDATE document SET url = :url, name = :name, WHERE id_student = :id_student AND type = :type`,
+                `UPDATE document SET url = :url, name = :name WHERE id_student = :id_student AND type = :type`,
                 {
                     replacements: {url, name, id_student, type},
                     type: QueryTypes.UPDATE,
