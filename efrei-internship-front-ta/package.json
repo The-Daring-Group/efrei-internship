@@ -29,7 +29,6 @@
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "@mdi/font": "^7.4.47",
     "axios": "^1.6.7",
-    "nuxt-app": "file:",
     "pinia-plugin-persistedstate": "^3.2.1"
   }
 }

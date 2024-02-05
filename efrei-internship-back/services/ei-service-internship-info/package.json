@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "ei-service-internship-info": "file:",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
