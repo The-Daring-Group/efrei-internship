@@ -32,8 +32,11 @@ const logout = () => {
           <li class="hover:text-blue-800">
             <NuxtLink to="grades">Grades</NuxtLink>
           </li>
-          <li>
+          <li class="hover:text-blue-800">
             <NuxtLink to="evaluation/autoEvaluation">Auto Evaluation</NuxtLink>
+          </li>
+          <li class="hover:text-blue-800">
+            <NuxtLink to="file">Documents</NuxtLink>
           </li>
         </ul>
       </nav>
