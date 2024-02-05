@@ -17,7 +17,7 @@ async function uploadFile(req) {
 
     const { id_student, type, name } = req.body;
 
-    const storageRef = ref(storage, name  + '_' + req.file.originalname);
+    const storageRef = ref(storage, name  + '_' + id_student + '_' + type + '.pdf');
 
     // Create file metadata including the content type
     const metadata = {
