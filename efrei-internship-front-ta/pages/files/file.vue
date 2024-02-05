@@ -1,7 +1,7 @@
 <template>
   <HeaderTA/>
   <div>
-    <div class="text-center pr-10 font-extrabold text-2xl">
+    <div class="tw-text-center tw-pr-10 tw-font-extrabold tw-text-2xl">
       The files uploaded by the students :
     </div>
     <div class="tw-m-5">
@@ -21,12 +21,13 @@
                         <td class="text-center">{{document.name}}</td>
                         <td class="text-center">{{ document.type }}</td>
                         <td class="text-center">
-                            <button @click="openLink(document.url)">Open Link</button>
+                            <button class="tw-text-blue-500 tw-underline tw-hover:text-blue-700 tw-focus:outline-none tw-focus:underline" @click="openLink(document.url)">Open Link</button>
                         </td>
                         <td class="text-center">{{ document.validated_by_company }}</td>
                         <td class="text-center">{{ document.validated_by_school }}</td>
                         <td class="text-center">
-                            <button @click="validateDocument(document)">Validate</button>
+                            <button class="tw-text-blue-500 tw-underline tw-hover:text-blue-700 tw-focus:outline-none tw-focus:underline"
+                                    @click="validateDocument(document)">Validate</button>
                         </td>
                     </tr>
                 </tbody>
@@ -73,14 +74,17 @@ export default {
       await useFetch('http://localhost:3030/academic_validate_file', {
         method: 'POST',
         body: {
-          id_student,
-          type,
-          url,
-          name,
+          id_student: id,
+          type: type,
+          url: url,
+          name: name,
         },
       }).then((res) => console.log(res))
         .catch((err) => console.error('Error occurred', err));
     },
+    openLink(url) {
+      window.open(url, '_blank');
+    }
   },
 }
 </script>
