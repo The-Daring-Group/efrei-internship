@@ -5,7 +5,7 @@ const app = express();
 // const port = process.env.PORT || 3000;
 const port = 3030;
 
-app.use(cors({ origin: ["http://localhost:3000"] }))
+app.use(cors({ origin: ["http://localhost:8000", "http://localhost:8001"] }))
 
 app.use(express.json());
 //app.use('/file', fileRoutes);

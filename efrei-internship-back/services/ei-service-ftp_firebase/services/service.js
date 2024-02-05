@@ -15,7 +15,7 @@ const storage = getStorage();
 //TODO: use a more complex identifier for the file name
 async function uploadFile(req) {
 
-    const { id_student, id_academic_tutor, id_company_tutor, type, name } = req.body;
+    const { id_student, type, name } = req.body;
 
     const storageRef = ref(storage, name  + '_' + req.file.originalname);
 
@@ -31,7 +31,7 @@ async function uploadFile(req) {
     // Grab the public url
     const downloadURL = await getDownloadURL(snapshot.ref);
 
-    SaveDocURL(downloadURL, id_student, id_academic_tutor, id_company_tutor, type, name);
+    await SaveDocURL(downloadURL, id_student, type, name);
 
     console.log('File successfully uploaded.');
 };
@@ -70,12 +70,12 @@ async function SaveDocURL(url, id_student, type, name) {
                     replacements: {id_student},
                     type: QueryTypes.SELECT,
                 });
-
+            console.log("id", id_academic_tutor, id_company_tutor);
 
             await sequelize.query(
                 `INSERT INTO document (url, validated_by_company, validated_by_school, id_student, id_academic_tutor, id_company_tutor, type, name) VALUES (?, FALSE, FALSE, ?, ?, ?, ?, ?)`,
                 {
-                    replacements: [url, id_student, id_academic_tutor, id_company_tutor, type, name],
+                    replacements: [url, id_student, id_academic_tutor[0].id_academic_tutor, id_company_tutor[0].id_company_tutor, type, name],
                     type: QueryTypes.INSERT,
                 }
             );
@@ -86,7 +86,7 @@ async function SaveDocURL(url, id_student, type, name) {
     
 }
 
-async function getFiles(req, res) {
+async function getFiles(req) {
     try {
         const documents = await sequelize.query(
             `SELECT * FROM document WHERE id_student = :id_student`,
@@ -105,4 +105,5 @@ async function getFiles(req, res) {
 
 module.exports = {
     uploadFile,
+    getFiles,
 };
