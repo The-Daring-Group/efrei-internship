@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async getInternships() {
-      await useFetch("http://localhost:3003/api/get-internship-student/" + id_student, {
+      const {data} = await useFetch("http://localhost:3003/api/get-internship-student/" + id_student, {
         method: 'get',
       })
       this.internships = data.value.internship
