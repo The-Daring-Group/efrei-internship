@@ -11,6 +11,17 @@ const uploadFile = async (req, res) => {
   }
 };
 
+
+const getFiles = async (req, res) => {
+  try {
+    const documents = await fileService.getFiles(req);
+    res.json(documents);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   uploadFile,
+  getFiles,
 };
