@@ -19,8 +19,8 @@
         <label id="tutorC" for="tutor">Tutor Company Email</label>
       </div>
       <div id="tutorsInput">
-        <input id="tutor" type="email" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email" />
-        <input id="tutor" type="email" v-model="internshipData.tutorCompany" placeholder="Tutor Company Email" />
+        <input id="tutorEmail" type="email" v-model="internshipData.tutorAcademy" placeholder="Tutor Academy Email" />
+        <input id="companyEmail" type="email" v-model="internshipData.tutorCompany" placeholder="Tutor Company Email" />
       </div>
     </div>
     <div>
@@ -84,7 +84,7 @@ export default {
           console.log("error" + error)
         },
         async onResponse({ request, response, options }) {
-          await navigateTo('/internship/Internships')
+          await navigateTo('/internship/list')
         },
         onResponseError({ request, response, options }) {
           console.log("error" + response.toString())
@@ -124,10 +124,6 @@ textarea {
   margin-right: 2%;
 }
 
-button:hover {
-  transform: scale(1.2);
-}
-
 #tutors {
   display: flex;
 }
@@ -140,4 +136,5 @@ button:hover {
   position: absolute;
   left: 54.5%;
   transform: translateX(-50%);
-}</style>
+}
+</style>

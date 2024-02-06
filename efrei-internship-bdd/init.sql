@@ -97,17 +97,17 @@ create table if not exists internship (
 );
 
 -- Trigger function to enforce foreign key constraint for id_internship
-CREATE OR REPLACE FUNCTION enforce_fk_internship() RETURNS TRIGGER AS $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM internship
-        WHERE id = NEW.id_internship
-    ) THEN
-        RAISE EXCEPTION 'Foreign key constraint violation on id_internship';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+-- CREATE OR REPLACE FUNCTION enforce_fk_internship() RETURNS TRIGGER AS $$
+-- BEGIN
+--     IF NOT EXISTS (
+--         SELECT 1 FROM internship
+--         WHERE id = NEW.id_internship
+--     ) THEN
+--         RAISE EXCEPTION 'Foreign key constraint violation on id_internship';
+--     END IF;
+--     RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
 
 -- Trigger for id_student
 CREATE TRIGGER trigger_fk_student_on_internship
@@ -154,16 +154,16 @@ create table if not exists document (
     name varchar(255) not null,
     type varchar(255) not null,
     validated_by_school boolean not null,
-    id_internship int not null,
+    -- id_internship int not null,
     id_student int not null,
     id_academic_tutor int not null,
     id_company_tutor int not null
 );
 
 -- Trigger for id_internship
-CREATE TRIGGER trigger_fk_internship_on_document
-BEFORE INSERT OR UPDATE ON document
-FOR EACH ROW EXECUTE FUNCTION enforce_fk_internship();
+-- CREATE TRIGGER trigger_fk_internship_on_document
+-- BEFORE INSERT OR UPDATE ON document
+-- FOR EACH ROW EXECUTE FUNCTION enforce_fk_internship();
 
 -- Trigger for id_student
 CREATE TRIGGER trigger_fk_student_on_document
@@ -264,3 +264,6 @@ insert into internship (title, start_date, end_date, description, company_name, 
     'DevOps Engineer', '2024-03-11', '2024-09-26', 
     'As a DevOps Engineer at Microsoft, my tasks will be to migrate the previous CI/CD system into a new one with powerful innovative technologies',
     'Microsoft Corporation',1, 2, 3);
+insert into evaluation (type_document, grade, commentary, id_student, id_academic_tutor, id_company_tutor) values ('Internship Report', 15, 'Very good report', 1, 2, 3);
+insert into digital_document (name, type, validated_by_school, id_student, id_academic_tutor, id_company_tutor, url, validated_by_company, confidential) values ('Internship Report', 'pdf', true, 1, 2, 3, 'https://firebasestorage.googleapis.com/v0/b/efrei-internship.appspot.com/o/Bug_1_Specifications.pdf?alt=media&token=71bdb746-b462-4037-b1a9-757b807ba104', true, false);
+insert into auto_evaluation (name, type, validated_by_school, id_student, id_academic_tutor, id_company_tutor, input1, input2, input3, input4, input5, input6, radio1, radio1_example, radio2, radio2_example, radio3, radio3_example, radio4, radio4_example, radio5, radio5_example, radio6, radio6_example, contact_tutor, contact_way) values ('Internship Report', 'pdf', true, 1, 2, 3, 'I have learned a lot', 'I have improved my skills', 'I have been autonomous', 'I have been proactive', 'I have been curious', 'I have been a team player', 4, 'Example1', 4, 'Example2', 4, 'Example3', 4, 'Example4', 4, 'Example5', 4, 'Example6', true, 'email');

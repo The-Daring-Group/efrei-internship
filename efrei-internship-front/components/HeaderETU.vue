@@ -10,8 +10,15 @@
                         </span>
                     </NuxtLink>
                 </li>
-                <li class="hover:bg-cyan-800 bg-cyan-600 w-fit p-2"><NuxtLink to="/internship/list">Internships</NuxtLink></li>
-                <li class="mx-2 hover:bg-cyan-800 bg-cyan-600 w-fit p-2"><NuxtLink to="/file">Documents</NuxtLink></li>
+                <li class="hover:bg-cyan-800 bg-cyan-600 w-fit p-2">
+                    <NuxtLink to="/internship/list">Internships</NuxtLink>
+                </li>
+                <li class="mx-2 hover:bg-cyan-800 bg-cyan-600 w-fit p-2">
+                    <NuxtLink to="/file">Documents</NuxtLink>
+                </li>
+                <li class="hover:bg-cyan-800 bg-cyan-600 w-fit p-2">
+                    <NuxtLink to="/evaluation/autoEvaluation">Auto Evaluation</NuxtLink>
+                </li>
                 <li class="hover:bg-cyan-800 bg-cyan-600 w-fit mx-2 p-2">
                     <NuxtLink to="/grades">Grades</NuxtLink>
                 </li>
@@ -20,7 +27,8 @@
                 </li>
             </ul>
             <ul class="flex flex-row">
-                <li class="hover:bg-sky-800 bg-sky-700 text-sky-200 w-fit p-2 mr-2 hover:cursor-pointer" @click="logout">Disconnect <font-awesome-icon class="ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
+                <li class="hover:bg-sky-800 bg-sky-700 text-sky-200 w-fit p-2 mr-2 hover:cursor-pointer" @click="logout">
+                    Disconnect <font-awesome-icon class="ml-0.5" :icon="['fas', 'arrow-right-from-bracket']" /></li>
             </ul>
         </nav>
     </div>
@@ -31,11 +39,11 @@ import { useSessionStore } from '#imports';
 const sessionStore = useSessionStore();
 const userInfos = ref(sessionStore.getUser)
 const logout = () => {
-  useFetch('http://localhost:3000/api/logout', {
-    method: 'POST',
-  }).then(() => {
-    sessionStore.logout()
-    navigateTo('/login')
-  })
+    useFetch('http://localhost:3000/api/logout', {
+        method: 'POST',
+    }).then(() => {
+        sessionStore.logout()
+        navigateTo('/login')
+    })
 }
 </script>

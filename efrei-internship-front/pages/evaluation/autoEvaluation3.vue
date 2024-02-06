@@ -1,4 +1,5 @@
 <template>
+  <header-e-t-u />
   <div>
     <h1>Bilan Périodique</h1>
     <h2>Fin de stage</h2>
@@ -196,7 +197,7 @@ export default {
 
     async getIfAnswered() {
       await useFetch(
-        `http://localhost:3003/api/auto-evaluation/${this.userId}/${this.internshipId}/3`, {
+        `http://localhost:3003/api/auto-evaluation/${this.userId}/3`, {
         onResponse: ({ response }) => {
           if (response.status === 200) {
             const res = response._data;

@@ -23,7 +23,7 @@
         <button class="submit-btn" type="submit">Upload</button>
       </form>
     </div>
-    <div v-if="filesSend.length !== 0">
+    <div>
       <div class="text-center pr-10 font-extrabold text-2xl">
         Your files uploaded :
       </div>
@@ -58,6 +58,8 @@ import { useSessionStore } from '#imports';
 
 export default {
   mounted() {
+    const sessionStore = useSessionStore();
+    this.id_student = sessionStore.getUser.id;
     this.getFilesStudent();
   },
   data() {
@@ -66,18 +68,15 @@ export default {
       type: '',
       files: null,
       filesSend: [],
+      id_student: '',
     };
-  },
-  mounted() {
-    const sessionStore = useSessionStore();
-    const id_student = sessionStore.getUser.id
   },
   methods: {
     submitform() {
       const formData = new FormData();
       formData.append('name', this.name);
       formData.append('type', this.type);
-      formData.append('id_student', id_student.toString());
+      formData.append('id_student', this.id_student.toString());
       // Assuming you only want to upload the first file if multiple files are selected
       if (this.files && this.files.length > 0) {
         formData.append('file', this.files[0]);
@@ -96,7 +95,7 @@ export default {
       const { data } = await useFetch("http://localhost:3030/get_student_files", {
         method: 'POST',
         body: {
-          id_student: id_student
+          id_student: this.id_student
         },
       })
       this.filesSend = data.value
@@ -108,6 +107,12 @@ export default {
 <style scoped>
 * {
   box-sizing: border-box;
+}
+
+#test {
+  border-collapse: collapse;
+  width: 95%;
+  text-align: center;
 }
 
 .container {
@@ -149,5 +154,15 @@ form input {
   border-radius: 3px;
   padding: 20px;
   text-align: center;
+}
+
+td {
+  border: 1px solid #ddd;
+  justify-content: center;
+}
+
+th,
+td {
+  padding: 40px;
 }
 </style>

@@ -39,14 +39,14 @@ router.get("/get-evaluation-student/:id_student", async (req, res) => {
     }
 });
 
-router.get("/auto-evaluation/:id_user/:id_internship/:eval_n", async (req, res) => {
-    const { id_user, id_internship, eval_n } = req.params
+router.get("/auto-evaluation/:id_user/:eval_n", async (req, res) => {
+    const { id_user, eval_n } = req.params
     const doc_name = 'autoEvaluation' + eval_n;
     try {
         const result = await sequelize.query(
-            `SELECT * FROM auto_evaluation WHERE id_student = :id_user AND id_internship = :id_internship AND name = :doc_name`,
+            `SELECT * FROM auto_evaluation WHERE id_student = :id_user AND name = :doc_name`,
             {
-                replacements: { id_user, id_internship, doc_name },
+                replacements: { id_user, doc_name },
                 type: QueryTypes.SELECT,
             }
         );
@@ -79,14 +79,14 @@ router.post("/auto-evaluation", async (req, res) => {
     );
 
     await sequelize.query(
-        `INSERT INTO auto_evaluation (name, type, id_student, id_internship, id_academic_tutor, id_company_tutor, validated_by_school,
+        `INSERT INTO auto_evaluation (name, type, id_student, id_academic_tutor, id_company_tutor, validated_by_school,
             input1, input2, input3, input4, input5, input6,
             radio1, radio1_example, radio2, radio2_example, radio3, radio3_example,
             radio4, radio4_example, radio5, radio5_example, radio6, radio6_example,
             contact_tutor, contact_way) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         {
-            replacements: [name, "autoEvaluation", userId, internshipId, internshipResult[0].id_academic_tutor, internshipResult[0].id_company_tutor, false,
+            replacements: [name, "autoEvaluation", userId, internshipResult[0].id_academic_tutor, internshipResult[0].id_company_tutor, false,
                 input1, input2, input3, input4, input5, input6_formatted,
                 radio1, radio1Example, radio2, radio2Example, radio3, radio3Example,
                 radio4, radio4Example, radio5, radio5Example, radio6, radio6Example,
