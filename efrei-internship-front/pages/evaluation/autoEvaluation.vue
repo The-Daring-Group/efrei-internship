@@ -1,4 +1,5 @@
 <template>
+  <header-e-t-u />
   <div>
     <h1>Auto Evaluation</h1>
     <div class="linkDiv">

@@ -17,4 +17,8 @@ app.use(session({ secret: 'demo secret', saveUninitialized: true, resave: true }
 app.use('/api/', apiRouterStudent)
 app.use('/api-staff/', apiRouterCompany)
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the auth API')
+})
+
 module.exports = app
